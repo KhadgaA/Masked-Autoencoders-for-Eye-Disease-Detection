@@ -1,0 +1,1 @@
+ 1677103457.970287 :: epochs: 30,train_loss: 1.7521082162857056, val_loss: 1.6849416494369507, val_acc: 0.4124999940395355, max_acc_epoch: 24, max_acc_loss: 1.6879210472106934, max_acc: 0.4137499928474426, other_info: {'Dataset': 'ODIR_Aug', 'BaseModel': 'vgg16_fcs', 'DA': 'augmentations', 'max_lr': 0.0001, 'sched': '[10,25]', 'Optim': 'ADAM'}

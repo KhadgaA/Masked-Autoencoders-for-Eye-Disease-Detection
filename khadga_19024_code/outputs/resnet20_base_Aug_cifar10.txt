@@ -1,0 +1,1 @@
+ 1678207907.700257 :: epochs: 240,train_loss: 0.02706369198858738, val_loss: 0.5167592167854309, val_acc: 0.8863455653190613, max_acc_epoch: 231, max_acc_loss: 0.5176301002502441, max_acc: 0.8885350227355957, other_info: {'Dataset': 'cifar10', 'BaseModel': 'resnet20', 'DA': 'padding-reflect', 'max_lr': 0.05, 'sched': 'adjustlearningrate', 'Optim': 'SGD'}

@@ -1,0 +1,1 @@
+ 1676153840.5885403 :: epochs: 30,train_loss: 1.2574436664581299, val_loss: 1.1798487901687622, val_acc: 0.6520833373069763, max_acc_epoch: 19, max_acc_loss: 1.0958287715911865, max_acc: 0.6854166388511658, other_info: {'Dataset': 'RFMiD_pure', 'BaseModel': 'EffNet+custom', 'DA': 'augmentations', 'max_lr': 0.01, 'sched': '[10,25]', 'Optim': 'ADAM'}

@@ -1,0 +1,1 @@
+ 1677054280.1996763 :: epochs: 30,train_loss: 2.180209159851074, val_loss: 1.8159106969833374, val_acc: 0.4227272570133209, max_acc_epoch: 25, max_acc_loss: 1.8167273998260498, max_acc: 0.42878785729408264, other_info: {'Dataset': 'RFMiD_Aug', 'BaseModel': 'Vgg16+custom', 'DA': 'augmentations', 'max_lr': 0.01, 'sched': '[10,25]', 'Optim': 'ADAM'}

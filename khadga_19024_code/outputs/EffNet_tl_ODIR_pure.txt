@@ -1,0 +1,1 @@
+ 1676042784.3352633 :: epochs: 30,train_loss: 1.2061916589736938, val_loss: 1.095199704170227, val_acc: 0.6026163101196289, max_acc_epoch: 8, max_acc_loss: 1.1077932119369507, max_acc: 0.6069767475128174, other_info: {'Dataset': 'ODIR_pure', 'BaseModel': 'EffNet+custom', 'DA': 'augmentations', 'max_lr': 0.01, 'sched': '[10,25]', 'Optim': 'ADAM'}

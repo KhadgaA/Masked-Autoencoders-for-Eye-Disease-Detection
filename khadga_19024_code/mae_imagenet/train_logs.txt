@@ -1,0 +1,1 @@
+1242388 - mae_finetune1.txt : main_finetune_mae.py, finetuning the mae_visuzlise_base.pth for 50 epochs on DOIR dataset

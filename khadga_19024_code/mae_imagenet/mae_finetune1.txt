@@ -1,0 +1,686 @@
+Not using distributed mode
+[17:33:38.701264] job dir: /data1/khadga/mae_imagenet
+[17:33:38.701333] Namespace(aa=None,
+accum_iter=2,
+batch_size=32,
+blr=0.0005,
+color_jitter=None,
+data_path='/data1/khadga/data/ODIR_Aug_Resample/',
+device='cuda',
+dist_on_itp=False,
+dist_url='env://',
+distributed=False,
+epochs=50,
+finetune='/data1/khadga/mae_imagenet/mae_visualize_vit_base.pth',
+input_size=224,
+local_rank=-1,
+log_dir='./output_dir_mae_finetune',
+lr=None,
+mask_ratio=0.75,
+min_lr=1e-06,
+model='mae_vit_base_patch16',
+norm_pix_loss=False,
+num_workers=10,
+output_dir='./output_dir_mae_finetune',
+pin_mem=True,
+recount=0,
+remode='pixel',
+reprob=0.0,
+resplit=False,
+resume='',
+seed=0,
+smoothing=0.0,
+start_epoch=0,
+warmup_epochs=5,
+weight_decay=0.05,
+world_size=1)
+[17:33:38.712364] Dataset ImageFolder
+    Number of datapoints: 4000
+    Root location: /data1/khadga/data/ODIR_Aug_Resample/train
+    StandardTransform
+Transform: Compose(
+               RandomResizedCropAndInterpolation(size=(224, 224), scale=(0.08, 1.0), ratio=(0.75, 1.3333), interpolation=PIL.Image.BICUBIC)
+               RandomHorizontalFlip(p=0.5)
+               ToTensor()
+               Normalize(mean=tensor([0.5000, 0.5000, 0.5000]), std=tensor([0.5000, 0.5000, 0.5000]))
+           )
+[17:33:38.740050] Dataset ImageFolder
+    Number of datapoints: 1600
+    Root location: /data1/khadga/data/ODIR_Aug_Resample/test
+    StandardTransform
+Transform: Compose(
+               Resize(size=256, interpolation=bicubic, max_size=None, antialias=warn)
+               CenterCrop(size=(224, 224))
+               ToTensor()
+               Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+           )
+[17:33:38.740148] Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7f2ee9b55e80>
+[17:33:40.421248] <All keys matched successfully>
+[17:33:41.906587] Model = MaskedAutoencoderViT(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (blocks): ModuleList(
+    (0-11): 12 x Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (decoder_embed): Linear(in_features=768, out_features=512, bias=True)
+  (decoder_blocks): ModuleList(
+    (0-7): 8 x Block(
+      (norm1): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=512, out_features=1536, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=512, out_features=512, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (decoder_norm): LayerNorm((512,), eps=1e-06, elementwise_affine=True)
+  (decoder_pred): Linear(in_features=512, out_features=768, bias=True)
+)
+[17:33:41.906677] base lr: 5.00e-04
+[17:33:41.906683] actual lr: 1.25e-04
+[17:33:41.906693] accumulate grad iterations: 2
+[17:33:41.906697] effective batch size: 64
+[17:33:41.907894] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 0.000125
+    maximize: False
+    weight_decay: 0.0
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.95)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 0.000125
+    maximize: False
+    weight_decay: 0.05
+)
+[17:33:41.908117] Start training for 50 epochs
+[17:33:41.909890] log_dir: ./output_dir_mae_finetune
+[17:33:48.049595] Epoch: [0]  [  0/125]  eta: 0:12:47  lr: 0.000000  loss: 0.0049 (0.0049)  time: 6.1378  data: 2.8095  max mem: 3242
+[17:33:50.251223] Epoch: [0]  [ 20/125]  eta: 0:00:41  lr: 0.000004  loss: 0.0043 (0.0047)  time: 0.1100  data: 0.0002  max mem: 4559
+[17:33:54.772231] Epoch: [0]  [ 40/125]  eta: 0:00:26  lr: 0.000008  loss: 0.0048 (0.0048)  time: 0.2260  data: 0.1244  max mem: 4559
+[17:34:00.918343] Epoch: [0]  [ 60/125]  eta: 0:00:20  lr: 0.000012  loss: 0.0043 (0.0047)  time: 0.3072  data: 0.2088  max mem: 4559
+[17:34:05.276307] Epoch: [0]  [ 80/125]  eta: 0:00:12  lr: 0.000016  loss: 0.0037 (0.0047)  time: 0.2178  data: 0.1211  max mem: 4559
+[17:34:09.945762] Epoch: [0]  [100/125]  eta: 0:00:06  lr: 0.000020  loss: 0.0043 (0.0046)  time: 0.2334  data: 0.1352  max mem: 4559
+[17:34:14.534788] Epoch: [0]  [120/125]  eta: 0:00:01  lr: 0.000024  loss: 0.0042 (0.0046)  time: 0.2294  data: 0.1316  max mem: 4559
+[17:34:14.915269] Epoch: [0]  [124/125]  eta: 0:00:00  lr: 0.000025  loss: 0.0042 (0.0046)  time: 0.2283  data: 0.1316  max mem: 4559
+[17:34:14.977058] Epoch: [0] Total time: 0:00:33 (0.2645 s / it)
+[17:34:14.977565] Averaged stats: lr: 0.000025  loss: 0.0042 (0.0046)
+[17:34:16.309562] log_dir: ./output_dir_mae_finetune
+[17:34:19.419698] Epoch: [1]  [  0/125]  eta: 0:06:28  lr: 0.000025  loss: 0.0044 (0.0044)  time: 3.1092  data: 3.0207  max mem: 4559
+[17:34:23.569955] Epoch: [1]  [ 20/125]  eta: 0:00:36  lr: 0.000029  loss: 0.0040 (0.0041)  time: 0.2075  data: 0.1108  max mem: 4559
+[17:34:27.873904] Epoch: [1]  [ 40/125]  eta: 0:00:23  lr: 0.000033  loss: 0.0045 (0.0045)  time: 0.2151  data: 0.1169  max mem: 4559
+[17:34:32.916493] Epoch: [1]  [ 60/125]  eta: 0:00:17  lr: 0.000037  loss: 0.0045 (0.0045)  time: 0.2521  data: 0.1471  max mem: 4559
+[17:34:37.202995] Epoch: [1]  [ 80/125]  eta: 0:00:11  lr: 0.000041  loss: 0.0046 (0.0045)  time: 0.2143  data: 0.1175  max mem: 4559
+[17:34:41.735393] Epoch: [1]  [100/125]  eta: 0:00:06  lr: 0.000045  loss: 0.0044 (0.0045)  time: 0.2266  data: 0.1285  max mem: 4559
+[17:34:46.097294] Epoch: [1]  [120/125]  eta: 0:00:01  lr: 0.000049  loss: 0.0042 (0.0045)  time: 0.2181  data: 0.1210  max mem: 4559
+[17:34:46.709521] Epoch: [1]  [124/125]  eta: 0:00:00  lr: 0.000050  loss: 0.0042 (0.0045)  time: 0.2290  data: 0.1323  max mem: 4559
+[17:34:46.823673] Epoch: [1] Total time: 0:00:30 (0.2441 s / it)
+[17:34:46.823800] Averaged stats: lr: 0.000050  loss: 0.0042 (0.0045)
+[17:34:46.830445] log_dir: ./output_dir_mae_finetune
+[17:34:49.985950] Epoch: [2]  [  0/125]  eta: 0:06:34  lr: 0.000050  loss: 0.0058 (0.0058)  time: 3.1542  data: 3.0709  max mem: 4559
+[17:34:54.601779] Epoch: [2]  [ 20/125]  eta: 0:00:38  lr: 0.000054  loss: 0.0048 (0.0049)  time: 0.2307  data: 0.1331  max mem: 4559
+[17:34:59.205835] Epoch: [2]  [ 40/125]  eta: 0:00:25  lr: 0.000058  loss: 0.0047 (0.0048)  time: 0.2301  data: 0.1315  max mem: 4559
+[17:35:04.049625] Epoch: [2]  [ 60/125]  eta: 0:00:18  lr: 0.000062  loss: 0.0046 (0.0047)  time: 0.2421  data: 0.1437  max mem: 4559
+[17:35:08.484667] Epoch: [2]  [ 80/125]  eta: 0:00:12  lr: 0.000066  loss: 0.0045 (0.0047)  time: 0.2217  data: 0.1204  max mem: 4559
+[17:35:13.124650] Epoch: [2]  [100/125]  eta: 0:00:06  lr: 0.000070  loss: 0.0048 (0.0047)  time: 0.2319  data: 0.1328  max mem: 4559
+[17:35:17.717153] Epoch: [2]  [120/125]  eta: 0:00:01  lr: 0.000074  loss: 0.0050 (0.0047)  time: 0.2296  data: 0.1325  max mem: 4559
+[17:35:18.099640] Epoch: [2]  [124/125]  eta: 0:00:00  lr: 0.000075  loss: 0.0045 (0.0047)  time: 0.2292  data: 0.1325  max mem: 4559
+[17:35:18.202877] Epoch: [2] Total time: 0:00:31 (0.2510 s / it)
+[17:35:18.203008] Averaged stats: lr: 0.000075  loss: 0.0045 (0.0047)
+[17:35:18.207583] log_dir: ./output_dir_mae_finetune
+[17:35:21.448005] Epoch: [3]  [  0/125]  eta: 0:06:44  lr: 0.000075  loss: 0.0041 (0.0041)  time: 3.2391  data: 3.1440  max mem: 4559
+[17:35:26.588566] Epoch: [3]  [ 20/125]  eta: 0:00:41  lr: 0.000079  loss: 0.0045 (0.0046)  time: 0.2570  data: 0.1551  max mem: 4559
+[17:35:31.272009] Epoch: [3]  [ 40/125]  eta: 0:00:27  lr: 0.000083  loss: 0.0047 (0.0048)  time: 0.2341  data: 0.1350  max mem: 4559
+[17:35:35.390421] Epoch: [3]  [ 60/125]  eta: 0:00:18  lr: 0.000087  loss: 0.0047 (0.0048)  time: 0.2058  data: 0.1069  max mem: 4559
+[17:35:40.181703] Epoch: [3]  [ 80/125]  eta: 0:00:12  lr: 0.000091  loss: 0.0044 (0.0048)  time: 0.2395  data: 0.1425  max mem: 4559
+[17:35:45.219481] Epoch: [3]  [100/125]  eta: 0:00:06  lr: 0.000095  loss: 0.0044 (0.0048)  time: 0.2518  data: 0.1504  max mem: 4559
+[17:35:49.779570] Epoch: [3]  [120/125]  eta: 0:00:01  lr: 0.000099  loss: 0.0045 (0.0048)  time: 0.2280  data: 0.1306  max mem: 4559
+[17:35:50.161490] Epoch: [3]  [124/125]  eta: 0:00:00  lr: 0.000100  loss: 0.0046 (0.0048)  time: 0.2269  data: 0.1305  max mem: 4559
+[17:35:50.283785] Epoch: [3] Total time: 0:00:32 (0.2566 s / it)
+[17:35:50.283853] Averaged stats: lr: 0.000100  loss: 0.0046 (0.0048)
+[17:35:50.286499] log_dir: ./output_dir_mae_finetune
+[17:35:53.563815] Epoch: [4]  [  0/125]  eta: 0:06:49  lr: 0.000100  loss: 0.0059 (0.0059)  time: 3.2763  data: 3.1862  max mem: 4559
+[17:35:57.666157] Epoch: [4]  [ 20/125]  eta: 0:00:36  lr: 0.000104  loss: 0.0046 (0.0049)  time: 0.2051  data: 0.1069  max mem: 4559
+[17:36:01.908861] Epoch: [4]  [ 40/125]  eta: 0:00:24  lr: 0.000108  loss: 0.0050 (0.0051)  time: 0.2121  data: 0.1138  max mem: 4559
+[17:36:07.377853] Epoch: [4]  [ 60/125]  eta: 0:00:18  lr: 0.000112  loss: 0.0048 (0.0050)  time: 0.2734  data: 0.1759  max mem: 4559
+[17:36:11.595334] Epoch: [4]  [ 80/125]  eta: 0:00:11  lr: 0.000116  loss: 0.0043 (0.0049)  time: 0.2108  data: 0.1119  max mem: 4559
+[17:36:16.194156] Epoch: [4]  [100/125]  eta: 0:00:06  lr: 0.000120  loss: 0.0046 (0.0049)  time: 0.2299  data: 0.1315  max mem: 4559
+[17:36:20.669225] Epoch: [4]  [120/125]  eta: 0:00:01  lr: 0.000124  loss: 0.0046 (0.0049)  time: 0.2237  data: 0.1254  max mem: 4559
+[17:36:21.058441] Epoch: [4]  [124/125]  eta: 0:00:00  lr: 0.000125  loss: 0.0048 (0.0049)  time: 0.2235  data: 0.1254  max mem: 4559
+[17:36:21.182020] Epoch: [4] Total time: 0:00:30 (0.2472 s / it)
+[17:36:21.182377] Averaged stats: lr: 0.000125  loss: 0.0048 (0.0049)
+[17:36:21.196904] log_dir: ./output_dir_mae_finetune
+[17:36:24.533422] Epoch: [5]  [  0/125]  eta: 0:06:56  lr: 0.000125  loss: 0.0059 (0.0059)  time: 3.3357  data: 3.2426  max mem: 4559
+[17:36:29.141519] Epoch: [5]  [ 20/125]  eta: 0:00:39  lr: 0.000125  loss: 0.0047 (0.0049)  time: 0.2303  data: 0.1225  max mem: 4559
+[17:36:33.835080] Epoch: [5]  [ 40/125]  eta: 0:00:26  lr: 0.000125  loss: 0.0049 (0.0050)  time: 0.2346  data: 0.1268  max mem: 4559
+[17:36:38.116995] Epoch: [5]  [ 60/125]  eta: 0:00:18  lr: 0.000125  loss: 0.0051 (0.0050)  time: 0.2140  data: 0.1031  max mem: 4559
+[17:36:42.965678] Epoch: [5]  [ 80/125]  eta: 0:00:12  lr: 0.000125  loss: 0.0047 (0.0050)  time: 0.2424  data: 0.1343  max mem: 4559
+[17:36:47.952817] Epoch: [5]  [100/125]  eta: 0:00:06  lr: 0.000125  loss: 0.0050 (0.0050)  time: 0.2493  data: 0.1400  max mem: 4559
+[17:36:52.495384] Epoch: [5]  [120/125]  eta: 0:00:01  lr: 0.000125  loss: 0.0044 (0.0050)  time: 0.2271  data: 0.1165  max mem: 4559
+[17:36:52.914792] Epoch: [5]  [124/125]  eta: 0:00:00  lr: 0.000125  loss: 0.0047 (0.0050)  time: 0.2259  data: 0.1165  max mem: 4559
+[17:36:53.028294] Epoch: [5] Total time: 0:00:31 (0.2546 s / it)
+[17:36:53.028430] Averaged stats: lr: 0.000125  loss: 0.0047 (0.0050)
+[17:36:53.034636] log_dir: ./output_dir_mae_finetune
+[17:36:55.888546] Epoch: [6]  [  0/125]  eta: 0:05:56  lr: 0.000125  loss: 0.0050 (0.0050)  time: 2.8529  data: 2.7534  max mem: 4559
+[17:37:00.601172] Epoch: [6]  [ 20/125]  eta: 0:00:37  lr: 0.000125  loss: 0.0047 (0.0048)  time: 0.2356  data: 0.1214  max mem: 4559
+[17:37:05.239955] Epoch: [6]  [ 40/125]  eta: 0:00:25  lr: 0.000125  loss: 0.0049 (0.0049)  time: 0.2319  data: 0.1208  max mem: 4559
+[17:37:09.585104] Epoch: [6]  [ 60/125]  eta: 0:00:17  lr: 0.000125  loss: 0.0045 (0.0049)  time: 0.2172  data: 0.1048  max mem: 4559
+[17:37:14.261845] Epoch: [6]  [ 80/125]  eta: 0:00:11  lr: 0.000125  loss: 0.0048 (0.0049)  time: 0.2337  data: 0.1239  max mem: 4559
+[17:37:19.094223] Epoch: [6]  [100/125]  eta: 0:00:06  lr: 0.000125  loss: 0.0046 (0.0049)  time: 0.2415  data: 0.1321  max mem: 4559
+[17:37:23.628164] Epoch: [6]  [120/125]  eta: 0:00:01  lr: 0.000124  loss: 0.0047 (0.0049)  time: 0.2267  data: 0.1183  max mem: 4559
+[17:37:24.046709] Epoch: [6]  [124/125]  eta: 0:00:00  lr: 0.000124  loss: 0.0047 (0.0049)  time: 0.2257  data: 0.1182  max mem: 4559
+[17:37:24.160683] Epoch: [6] Total time: 0:00:31 (0.2490 s / it)
+[17:37:24.160821] Averaged stats: lr: 0.000124  loss: 0.0047 (0.0049)
+[17:37:24.167698] log_dir: ./output_dir_mae_finetune
+[17:37:27.013394] Epoch: [7]  [  0/125]  eta: 0:05:55  lr: 0.000124  loss: 0.0044 (0.0044)  time: 2.8445  data: 2.7406  max mem: 4559
+[17:37:30.965407] Epoch: [7]  [ 20/125]  eta: 0:00:33  lr: 0.000124  loss: 0.0045 (0.0046)  time: 0.1975  data: 0.0862  max mem: 4559
+[17:37:35.883900] Epoch: [7]  [ 40/125]  eta: 0:00:24  lr: 0.000124  loss: 0.0049 (0.0049)  time: 0.2458  data: 0.1289  max mem: 4559
+[17:37:40.895974] Epoch: [7]  [ 60/125]  eta: 0:00:17  lr: 0.000124  loss: 0.0052 (0.0050)  time: 0.2505  data: 0.1396  max mem: 4559
+[17:37:45.577497] Epoch: [7]  [ 80/125]  eta: 0:00:11  lr: 0.000124  loss: 0.0048 (0.0050)  time: 0.2340  data: 0.1234  max mem: 4559
+[17:37:50.754746] Epoch: [7]  [100/125]  eta: 0:00:06  lr: 0.000124  loss: 0.0047 (0.0050)  time: 0.2588  data: 0.1482  max mem: 4559
+[17:37:55.357082] Epoch: [7]  [120/125]  eta: 0:00:01  lr: 0.000124  loss: 0.0044 (0.0049)  time: 0.2301  data: 0.1199  max mem: 4559
+[17:37:56.057848] Epoch: [7]  [124/125]  eta: 0:00:00  lr: 0.000124  loss: 0.0044 (0.0049)  time: 0.2438  data: 0.1338  max mem: 4559
+[17:37:56.168755] Epoch: [7] Total time: 0:00:32 (0.2560 s / it)
+[17:37:56.168879] Averaged stats: lr: 0.000124  loss: 0.0044 (0.0049)
+[17:37:56.174371] log_dir: ./output_dir_mae_finetune
+[17:37:59.260997] Epoch: [8]  [  0/125]  eta: 0:06:25  lr: 0.000124  loss: 0.0039 (0.0039)  time: 3.0854  data: 2.9822  max mem: 4559
+[17:38:04.235849] Epoch: [8]  [ 20/125]  eta: 0:00:40  lr: 0.000123  loss: 0.0044 (0.0045)  time: 0.2487  data: 0.1410  max mem: 4559
+[17:38:08.893385] Epoch: [8]  [ 40/125]  eta: 0:00:26  lr: 0.000123  loss: 0.0044 (0.0046)  time: 0.2328  data: 0.1253  max mem: 4559
+[17:38:13.004806] Epoch: [8]  [ 60/125]  eta: 0:00:17  lr: 0.000123  loss: 0.0047 (0.0047)  time: 0.2054  data: 0.0886  max mem: 4559
+[17:38:17.640193] Epoch: [8]  [ 80/125]  eta: 0:00:11  lr: 0.000123  loss: 0.0045 (0.0047)  time: 0.2317  data: 0.1199  max mem: 4559
+[17:38:22.495117] Epoch: [8]  [100/125]  eta: 0:00:06  lr: 0.000123  loss: 0.0043 (0.0046)  time: 0.2427  data: 0.1317  max mem: 4559
+[17:38:27.047156] Epoch: [8]  [120/125]  eta: 0:00:01  lr: 0.000123  loss: 0.0042 (0.0046)  time: 0.2276  data: 0.1165  max mem: 4559
+[17:38:27.477477] Epoch: [8]  [124/125]  eta: 0:00:00  lr: 0.000123  loss: 0.0042 (0.0046)  time: 0.2276  data: 0.1165  max mem: 4559
+[17:38:27.593359] Epoch: [8] Total time: 0:00:31 (0.2514 s / it)
+[17:38:27.593497] Averaged stats: lr: 0.000123  loss: 0.0042 (0.0046)
+[17:38:27.599061] log_dir: ./output_dir_mae_finetune
+[17:38:30.823298] Epoch: [9]  [  0/125]  eta: 0:06:42  lr: 0.000123  loss: 0.0047 (0.0047)  time: 3.2234  data: 3.1186  max mem: 4559
+[17:38:35.279538] Epoch: [9]  [ 20/125]  eta: 0:00:38  lr: 0.000122  loss: 0.0043 (0.0044)  time: 0.2227  data: 0.1124  max mem: 4559
+[17:38:39.742694] Epoch: [9]  [ 40/125]  eta: 0:00:25  lr: 0.000122  loss: 0.0046 (0.0046)  time: 0.2231  data: 0.1129  max mem: 4559
+[17:38:44.935643] Epoch: [9]  [ 60/125]  eta: 0:00:18  lr: 0.000122  loss: 0.0048 (0.0047)  time: 0.2596  data: 0.1498  max mem: 4559
+[17:38:50.154128] Epoch: [9]  [ 80/125]  eta: 0:00:12  lr: 0.000122  loss: 0.0041 (0.0046)  time: 0.2608  data: 0.1484  max mem: 4559
+[17:38:54.883216] Epoch: [9]  [100/125]  eta: 0:00:06  lr: 0.000122  loss: 0.0045 (0.0046)  time: 0.2363  data: 0.1269  max mem: 4559
+[17:38:59.782792] Epoch: [9]  [120/125]  eta: 0:00:01  lr: 0.000121  loss: 0.0043 (0.0046)  time: 0.2449  data: 0.1355  max mem: 4559
+[17:39:00.682453] Epoch: [9]  [124/125]  eta: 0:00:00  lr: 0.000121  loss: 0.0045 (0.0046)  time: 0.2530  data: 0.1444  max mem: 4559
+[17:39:00.783532] Epoch: [9] Total time: 0:00:33 (0.2655 s / it)
+[17:39:00.783672] Averaged stats: lr: 0.000121  loss: 0.0045 (0.0046)
+[17:39:00.788234] log_dir: ./output_dir_mae_finetune
+[17:39:04.261114] Epoch: [10]  [  0/125]  eta: 0:07:14  lr: 0.000121  loss: 0.0059 (0.0059)  time: 3.4720  data: 3.2683  max mem: 4559
+[17:39:08.621074] Epoch: [10]  [ 20/125]  eta: 0:00:39  lr: 0.000121  loss: 0.0047 (0.0048)  time: 0.2179  data: 0.1078  max mem: 4559
+[17:39:13.227639] Epoch: [10]  [ 40/125]  eta: 0:00:25  lr: 0.000121  loss: 0.0053 (0.0050)  time: 0.2303  data: 0.1197  max mem: 4559
+[17:39:17.745367] Epoch: [10]  [ 60/125]  eta: 0:00:18  lr: 0.000121  loss: 0.0048 (0.0050)  time: 0.2258  data: 0.1169  max mem: 4559
+[17:39:22.574207] Epoch: [10]  [ 80/125]  eta: 0:00:12  lr: 0.000120  loss: 0.0042 (0.0049)  time: 0.2414  data: 0.1286  max mem: 4559
+[17:39:27.602382] Epoch: [10]  [100/125]  eta: 0:00:06  lr: 0.000120  loss: 0.0042 (0.0048)  time: 0.2513  data: 0.1405  max mem: 4559
+[17:39:33.092470] Epoch: [10]  [120/125]  eta: 0:00:01  lr: 0.000120  loss: 0.0041 (0.0048)  time: 0.2745  data: 0.1644  max mem: 4559
+[17:39:33.533899] Epoch: [10]  [124/125]  eta: 0:00:00  lr: 0.000120  loss: 0.0044 (0.0048)  time: 0.2561  data: 0.1462  max mem: 4559
+[17:39:33.634935] Epoch: [10] Total time: 0:00:32 (0.2628 s / it)
+[17:39:33.635047] Averaged stats: lr: 0.000120  loss: 0.0044 (0.0048)
+[17:39:33.639540] log_dir: ./output_dir_mae_finetune
+[17:39:37.016360] Epoch: [11]  [  0/125]  eta: 0:07:01  lr: 0.000120  loss: 0.0043 (0.0043)  time: 3.3744  data: 3.2732  max mem: 4559
+[17:39:41.792520] Epoch: [11]  [ 20/125]  eta: 0:00:40  lr: 0.000119  loss: 0.0045 (0.0045)  time: 0.2387  data: 0.1253  max mem: 4559
+[17:39:46.709771] Epoch: [11]  [ 40/125]  eta: 0:00:27  lr: 0.000119  loss: 0.0046 (0.0046)  time: 0.2458  data: 0.1328  max mem: 4559
+[17:39:51.519247] Epoch: [11]  [ 60/125]  eta: 0:00:19  lr: 0.000119  loss: 0.0047 (0.0047)  time: 0.2404  data: 0.1275  max mem: 4559
+[17:39:56.591310] Epoch: [11]  [ 80/125]  eta: 0:00:12  lr: 0.000118  loss: 0.0040 (0.0046)  time: 0.2535  data: 0.1436  max mem: 4559
+[17:40:01.276739] Epoch: [11]  [100/125]  eta: 0:00:06  lr: 0.000118  loss: 0.0045 (0.0046)  time: 0.2342  data: 0.1207  max mem: 4559
+[17:40:06.133726] Epoch: [11]  [120/125]  eta: 0:00:01  lr: 0.000118  loss: 0.0043 (0.0046)  time: 0.2428  data: 0.1296  max mem: 4559
+[17:40:07.397021] Epoch: [11]  [124/125]  eta: 0:00:00  lr: 0.000118  loss: 0.0043 (0.0046)  time: 0.2536  data: 0.1412  max mem: 4559
+[17:40:07.519527] Epoch: [11] Total time: 0:00:33 (0.2710 s / it)
+[17:40:07.519645] Averaged stats: lr: 0.000118  loss: 0.0043 (0.0046)
+[17:40:07.524483] log_dir: ./output_dir_mae_finetune
+[17:40:10.938944] Epoch: [12]  [  0/125]  eta: 0:07:06  lr: 0.000118  loss: 0.0061 (0.0061)  time: 3.4129  data: 3.3139  max mem: 4559
+[17:40:15.612925] Epoch: [12]  [ 20/125]  eta: 0:00:40  lr: 0.000117  loss: 0.0043 (0.0047)  time: 0.2336  data: 0.1208  max mem: 4559
+[17:40:20.554424] Epoch: [12]  [ 40/125]  eta: 0:00:27  lr: 0.000117  loss: 0.0044 (0.0046)  time: 0.2470  data: 0.1310  max mem: 4559
+[17:40:25.472727] Epoch: [12]  [ 60/125]  eta: 0:00:19  lr: 0.000117  loss: 0.0045 (0.0046)  time: 0.2457  data: 0.1294  max mem: 4559
+[17:40:30.085677] Epoch: [12]  [ 80/125]  eta: 0:00:12  lr: 0.000116  loss: 0.0044 (0.0047)  time: 0.2306  data: 0.1204  max mem: 4559
+[17:40:35.384814] Epoch: [12]  [100/125]  eta: 0:00:06  lr: 0.000116  loss: 0.0045 (0.0046)  time: 0.2649  data: 0.1528  max mem: 4559
+[17:40:40.324291] Epoch: [12]  [120/125]  eta: 0:00:01  lr: 0.000116  loss: 0.0043 (0.0046)  time: 0.2469  data: 0.1371  max mem: 4559
+[17:40:40.942631] Epoch: [12]  [124/125]  eta: 0:00:00  lr: 0.000116  loss: 0.0041 (0.0046)  time: 0.2562  data: 0.1463  max mem: 4559
+[17:40:41.062296] Epoch: [12] Total time: 0:00:33 (0.2683 s / it)
+[17:40:41.062438] Averaged stats: lr: 0.000116  loss: 0.0041 (0.0046)
+[17:40:41.068207] log_dir: ./output_dir_mae_finetune
+[17:40:43.997173] Epoch: [13]  [  0/125]  eta: 0:06:06  lr: 0.000116  loss: 0.0049 (0.0049)  time: 2.9281  data: 2.8262  max mem: 4559
+[17:40:48.436849] Epoch: [13]  [ 20/125]  eta: 0:00:36  lr: 0.000115  loss: 0.0040 (0.0043)  time: 0.2219  data: 0.1115  max mem: 4559
+[17:40:53.441883] Epoch: [13]  [ 40/125]  eta: 0:00:25  lr: 0.000115  loss: 0.0047 (0.0046)  time: 0.2502  data: 0.1405  max mem: 4559
+[17:40:59.049165] Epoch: [13]  [ 60/125]  eta: 0:00:19  lr: 0.000114  loss: 0.0041 (0.0046)  time: 0.2803  data: 0.1705  max mem: 4559
+[17:41:03.698865] Epoch: [13]  [ 80/125]  eta: 0:00:12  lr: 0.000114  loss: 0.0045 (0.0046)  time: 0.2324  data: 0.1239  max mem: 4559
+[17:41:08.466376] Epoch: [13]  [100/125]  eta: 0:00:06  lr: 0.000114  loss: 0.0044 (0.0046)  time: 0.2383  data: 0.1291  max mem: 4559
+[17:41:13.222788] Epoch: [13]  [120/125]  eta: 0:00:01  lr: 0.000113  loss: 0.0043 (0.0046)  time: 0.2378  data: 0.1283  max mem: 4559
+[17:41:14.798974] Epoch: [13]  [124/125]  eta: 0:00:00  lr: 0.000113  loss: 0.0044 (0.0045)  time: 0.2651  data: 0.1556  max mem: 4559
+[17:41:14.894769] Epoch: [13] Total time: 0:00:33 (0.2706 s / it)
+[17:41:14.894990] Averaged stats: lr: 0.000113  loss: 0.0044 (0.0045)
+[17:41:14.903938] log_dir: ./output_dir_mae_finetune
+[17:41:18.208240] Epoch: [14]  [  0/125]  eta: 0:06:52  lr: 0.000113  loss: 0.0030 (0.0030)  time: 3.3029  data: 3.1931  max mem: 4559
+[17:41:22.982062] Epoch: [14]  [ 20/125]  eta: 0:00:40  lr: 0.000113  loss: 0.0038 (0.0042)  time: 0.2386  data: 0.1311  max mem: 4559
+[17:41:27.871046] Epoch: [14]  [ 40/125]  eta: 0:00:26  lr: 0.000112  loss: 0.0046 (0.0045)  time: 0.2444  data: 0.1329  max mem: 4559
+[17:41:32.252713] Epoch: [14]  [ 60/125]  eta: 0:00:18  lr: 0.000112  loss: 0.0046 (0.0045)  time: 0.2189  data: 0.1077  max mem: 4559
+[17:41:37.786353] Epoch: [14]  [ 80/125]  eta: 0:00:12  lr: 0.000111  loss: 0.0043 (0.0045)  time: 0.2766  data: 0.1637  max mem: 4559
+[17:41:43.019328] Epoch: [14]  [100/125]  eta: 0:00:06  lr: 0.000111  loss: 0.0042 (0.0045)  time: 0.2616  data: 0.1491  max mem: 4559
+[17:41:47.629620] Epoch: [14]  [120/125]  eta: 0:00:01  lr: 0.000111  loss: 0.0046 (0.0045)  time: 0.2304  data: 0.1163  max mem: 4559
+[17:41:48.088807] Epoch: [14]  [124/125]  eta: 0:00:00  lr: 0.000111  loss: 0.0045 (0.0045)  time: 0.2303  data: 0.1163  max mem: 4559
+[17:41:48.224092] Epoch: [14] Total time: 0:00:33 (0.2666 s / it)
+[17:41:48.224247] Averaged stats: lr: 0.000111  loss: 0.0045 (0.0045)
+[17:41:48.231149] log_dir: ./output_dir_mae_finetune
+[17:41:51.531461] Epoch: [15]  [  0/125]  eta: 0:06:52  lr: 0.000110  loss: 0.0043 (0.0043)  time: 3.2995  data: 3.1898  max mem: 4559
+[17:41:56.390342] Epoch: [15]  [ 20/125]  eta: 0:00:40  lr: 0.000110  loss: 0.0043 (0.0045)  time: 0.2429  data: 0.1301  max mem: 4559
+[17:42:01.431142] Epoch: [15]  [ 40/125]  eta: 0:00:27  lr: 0.000110  loss: 0.0045 (0.0047)  time: 0.2520  data: 0.1415  max mem: 4559
+[17:42:06.219789] Epoch: [15]  [ 60/125]  eta: 0:00:19  lr: 0.000109  loss: 0.0044 (0.0046)  time: 0.2394  data: 0.1299  max mem: 4559
+[17:42:11.388389] Epoch: [15]  [ 80/125]  eta: 0:00:12  lr: 0.000109  loss: 0.0041 (0.0046)  time: 0.2584  data: 0.1472  max mem: 4559
+[17:42:16.551807] Epoch: [15]  [100/125]  eta: 0:00:07  lr: 0.000108  loss: 0.0043 (0.0046)  time: 0.2581  data: 0.1436  max mem: 4559
+[17:42:21.294876] Epoch: [15]  [120/125]  eta: 0:00:01  lr: 0.000108  loss: 0.0039 (0.0045)  time: 0.2371  data: 0.1247  max mem: 4559
+[17:42:21.764863] Epoch: [15]  [124/125]  eta: 0:00:00  lr: 0.000108  loss: 0.0039 (0.0045)  time: 0.2373  data: 0.1246  max mem: 4559
+[17:42:21.895220] Epoch: [15] Total time: 0:00:33 (0.2693 s / it)
+[17:42:21.895358] Averaged stats: lr: 0.000108  loss: 0.0039 (0.0045)
+[17:42:21.901693] log_dir: ./output_dir_mae_finetune
+[17:42:25.004288] Epoch: [16]  [  0/125]  eta: 0:06:27  lr: 0.000108  loss: 0.0070 (0.0070)  time: 3.1019  data: 3.0108  max mem: 4559
+[17:42:29.774494] Epoch: [16]  [ 20/125]  eta: 0:00:39  lr: 0.000107  loss: 0.0042 (0.0045)  time: 0.2384  data: 0.1282  max mem: 4559
+[17:42:34.934385] Epoch: [16]  [ 40/125]  eta: 0:00:27  lr: 0.000107  loss: 0.0044 (0.0045)  time: 0.2579  data: 0.1413  max mem: 4559
+[17:42:40.319901] Epoch: [16]  [ 60/125]  eta: 0:00:19  lr: 0.000106  loss: 0.0042 (0.0044)  time: 0.2692  data: 0.1597  max mem: 4559
+[17:42:45.157385] Epoch: [16]  [ 80/125]  eta: 0:00:12  lr: 0.000106  loss: 0.0042 (0.0044)  time: 0.2418  data: 0.1331  max mem: 4559
+[17:42:50.848626] Epoch: [16]  [100/125]  eta: 0:00:07  lr: 0.000105  loss: 0.0039 (0.0043)  time: 0.2845  data: 0.1754  max mem: 4559
+[17:42:56.023118] Epoch: [16]  [120/125]  eta: 0:00:01  lr: 0.000105  loss: 0.0037 (0.0043)  time: 0.2587  data: 0.1484  max mem: 4559
+[17:42:56.438728] Epoch: [16]  [124/125]  eta: 0:00:00  lr: 0.000105  loss: 0.0041 (0.0043)  time: 0.2572  data: 0.1484  max mem: 4559
+[17:42:56.565321] Epoch: [16] Total time: 0:00:34 (0.2773 s / it)
+[17:42:56.565478] Averaged stats: lr: 0.000105  loss: 0.0041 (0.0043)
+[17:42:56.571022] log_dir: ./output_dir_mae_finetune
+[17:42:59.514259] Epoch: [17]  [  0/125]  eta: 0:06:07  lr: 0.000104  loss: 0.0039 (0.0039)  time: 2.9421  data: 2.8380  max mem: 4559
+[17:43:03.812033] Epoch: [17]  [ 20/125]  eta: 0:00:36  lr: 0.000104  loss: 0.0042 (0.0043)  time: 0.2148  data: 0.1080  max mem: 4559
+[17:43:08.488294] Epoch: [17]  [ 40/125]  eta: 0:00:24  lr: 0.000103  loss: 0.0045 (0.0044)  time: 0.2338  data: 0.1179  max mem: 4559
+[17:43:13.797235] Epoch: [17]  [ 60/125]  eta: 0:00:18  lr: 0.000103  loss: 0.0041 (0.0044)  time: 0.2654  data: 0.1557  max mem: 4559
+[17:43:18.252968] Epoch: [17]  [ 80/125]  eta: 0:00:12  lr: 0.000102  loss: 0.0040 (0.0043)  time: 0.2227  data: 0.1130  max mem: 4559
+[17:43:23.602038] Epoch: [17]  [100/125]  eta: 0:00:06  lr: 0.000102  loss: 0.0039 (0.0043)  time: 0.2674  data: 0.1585  max mem: 4559
+[17:43:28.711342] Epoch: [17]  [120/125]  eta: 0:00:01  lr: 0.000101  loss: 0.0041 (0.0043)  time: 0.2554  data: 0.1459  max mem: 4559
+[17:43:30.390222] Epoch: [17]  [124/125]  eta: 0:00:00  lr: 0.000101  loss: 0.0039 (0.0042)  time: 0.2867  data: 0.1779  max mem: 4559
+[17:43:30.504581] Epoch: [17] Total time: 0:00:33 (0.2715 s / it)
+[17:43:30.504700] Averaged stats: lr: 0.000101  loss: 0.0039 (0.0042)
+[17:43:30.510538] log_dir: ./output_dir_mae_finetune
+[17:43:33.746776] Epoch: [18]  [  0/125]  eta: 0:06:44  lr: 0.000101  loss: 0.0028 (0.0028)  time: 3.2349  data: 3.1391  max mem: 4559
+[17:43:38.805981] Epoch: [18]  [ 20/125]  eta: 0:00:41  lr: 0.000101  loss: 0.0040 (0.0040)  time: 0.2529  data: 0.1457  max mem: 4559
+[17:43:43.811496] Epoch: [18]  [ 40/125]  eta: 0:00:27  lr: 0.000100  loss: 0.0047 (0.0044)  time: 0.2501  data: 0.1351  max mem: 4559
+[17:43:48.992976] Epoch: [18]  [ 60/125]  eta: 0:00:19  lr: 0.000100  loss: 0.0042 (0.0044)  time: 0.2589  data: 0.1465  max mem: 4559
+[17:43:53.778248] Epoch: [18]  [ 80/125]  eta: 0:00:12  lr: 0.000099  loss: 0.0041 (0.0043)  time: 0.2392  data: 0.1310  max mem: 4559
+[17:43:58.545098] Epoch: [18]  [100/125]  eta: 0:00:06  lr: 0.000098  loss: 0.0040 (0.0043)  time: 0.2383  data: 0.1265  max mem: 4559
+[17:44:03.206113] Epoch: [18]  [120/125]  eta: 0:00:01  lr: 0.000098  loss: 0.0044 (0.0043)  time: 0.2330  data: 0.1260  max mem: 4559
+[17:44:05.675801] Epoch: [18]  [124/125]  eta: 0:00:00  lr: 0.000098  loss: 0.0047 (0.0043)  time: 0.2883  data: 0.1833  max mem: 4559
+[17:44:05.809528] Epoch: [18] Total time: 0:00:35 (0.2824 s / it)
+[17:44:05.809659] Averaged stats: lr: 0.000098  loss: 0.0047 (0.0043)
+[17:44:05.813460] log_dir: ./output_dir_mae_finetune
+[17:44:09.160001] Epoch: [19]  [  0/125]  eta: 0:06:58  lr: 0.000098  loss: 0.0035 (0.0035)  time: 3.3456  data: 3.2482  max mem: 4559
+[17:44:14.006633] Epoch: [19]  [ 20/125]  eta: 0:00:40  lr: 0.000097  loss: 0.0039 (0.0040)  time: 0.2423  data: 0.1349  max mem: 4559
+[17:44:18.679380] Epoch: [19]  [ 40/125]  eta: 0:00:26  lr: 0.000097  loss: 0.0040 (0.0043)  time: 0.2336  data: 0.1250  max mem: 4559
+[17:44:23.060350] Epoch: [19]  [ 60/125]  eta: 0:00:18  lr: 0.000096  loss: 0.0044 (0.0044)  time: 0.2190  data: 0.1047  max mem: 4559
+[17:44:28.226538] Epoch: [19]  [ 80/125]  eta: 0:00:12  lr: 0.000095  loss: 0.0041 (0.0044)  time: 0.2582  data: 0.1480  max mem: 4559
+[17:44:33.237490] Epoch: [19]  [100/125]  eta: 0:00:06  lr: 0.000095  loss: 0.0038 (0.0043)  time: 0.2504  data: 0.1388  max mem: 4559
+[17:44:38.806995] Epoch: [19]  [120/125]  eta: 0:00:01  lr: 0.000094  loss: 0.0041 (0.0043)  time: 0.2784  data: 0.1686  max mem: 4559
+[17:44:39.239629] Epoch: [19]  [124/125]  eta: 0:00:00  lr: 0.000094  loss: 0.0044 (0.0043)  time: 0.2607  data: 0.1508  max mem: 4559
+[17:44:39.362234] Epoch: [19] Total time: 0:00:33 (0.2684 s / it)
+[17:44:39.362351] Averaged stats: lr: 0.000094  loss: 0.0044 (0.0043)
+[17:44:39.368111] log_dir: ./output_dir_mae_finetune
+[17:44:42.617097] Epoch: [20]  [  0/125]  eta: 0:06:45  lr: 0.000094  loss: 0.0038 (0.0038)  time: 3.2471  data: 3.1499  max mem: 4559
+[17:44:47.588600] Epoch: [20]  [ 20/125]  eta: 0:00:41  lr: 0.000093  loss: 0.0040 (0.0043)  time: 0.2485  data: 0.1405  max mem: 4559
+[17:44:52.473867] Epoch: [20]  [ 40/125]  eta: 0:00:27  lr: 0.000093  loss: 0.0044 (0.0044)  time: 0.2441  data: 0.1341  max mem: 4559
+[17:44:57.266114] Epoch: [20]  [ 60/125]  eta: 0:00:19  lr: 0.000092  loss: 0.0043 (0.0044)  time: 0.2395  data: 0.1291  max mem: 4559
+[17:45:02.185694] Epoch: [20]  [ 80/125]  eta: 0:00:12  lr: 0.000092  loss: 0.0038 (0.0043)  time: 0.2459  data: 0.1392  max mem: 4559
+[17:45:07.183313] Epoch: [20]  [100/125]  eta: 0:00:06  lr: 0.000091  loss: 0.0039 (0.0043)  time: 0.2498  data: 0.1515  max mem: 4559
+[17:45:11.620826] Epoch: [20]  [120/125]  eta: 0:00:01  lr: 0.000090  loss: 0.0040 (0.0043)  time: 0.2218  data: 0.1243  max mem: 4559
+[17:45:12.006042] Epoch: [20]  [124/125]  eta: 0:00:00  lr: 0.000090  loss: 0.0040 (0.0043)  time: 0.2215  data: 0.1243  max mem: 4559
+[17:45:12.122250] Epoch: [20] Total time: 0:00:32 (0.2620 s / it)
+[17:45:12.122629] Averaged stats: lr: 0.000090  loss: 0.0040 (0.0043)
+[17:45:13.428533] log_dir: ./output_dir_mae_finetune
+[17:45:16.645040] Epoch: [21]  [  0/125]  eta: 0:06:41  lr: 0.000090  loss: 0.0039 (0.0039)  time: 3.2153  data: 3.1304  max mem: 4559
+[17:45:20.708337] Epoch: [21]  [ 20/125]  eta: 0:00:36  lr: 0.000090  loss: 0.0040 (0.0042)  time: 0.2031  data: 0.1053  max mem: 4559
+[17:45:25.014506] Epoch: [21]  [ 40/125]  eta: 0:00:24  lr: 0.000089  loss: 0.0040 (0.0041)  time: 0.2152  data: 0.1166  max mem: 4559
+[17:45:29.316386] Epoch: [21]  [ 60/125]  eta: 0:00:16  lr: 0.000088  loss: 0.0039 (0.0041)  time: 0.2150  data: 0.1172  max mem: 4559
+[17:45:33.617131] Epoch: [21]  [ 80/125]  eta: 0:00:11  lr: 0.000088  loss: 0.0039 (0.0042)  time: 0.2149  data: 0.1159  max mem: 4559
+[17:45:38.462502] Epoch: [21]  [100/125]  eta: 0:00:06  lr: 0.000087  loss: 0.0038 (0.0042)  time: 0.2422  data: 0.1390  max mem: 4559
+[17:45:43.054471] Epoch: [21]  [120/125]  eta: 0:00:01  lr: 0.000086  loss: 0.0040 (0.0041)  time: 0.2296  data: 0.1317  max mem: 4559
+[17:45:43.883648] Epoch: [21]  [124/125]  eta: 0:00:00  lr: 0.000086  loss: 0.0041 (0.0041)  time: 0.2394  data: 0.1431  max mem: 4559
+[17:45:43.997386] Epoch: [21] Total time: 0:00:30 (0.2445 s / it)
+[17:45:43.997522] Averaged stats: lr: 0.000086  loss: 0.0041 (0.0041)
+[17:45:44.003115] log_dir: ./output_dir_mae_finetune
+[17:45:46.851633] Epoch: [22]  [  0/125]  eta: 0:05:55  lr: 0.000086  loss: 0.0043 (0.0043)  time: 2.8478  data: 2.7580  max mem: 4559
+[17:45:51.177951] Epoch: [22]  [ 20/125]  eta: 0:00:35  lr: 0.000086  loss: 0.0041 (0.0041)  time: 0.2162  data: 0.1189  max mem: 4559
+[17:45:55.631801] Epoch: [22]  [ 40/125]  eta: 0:00:24  lr: 0.000085  loss: 0.0041 (0.0042)  time: 0.2226  data: 0.1239  max mem: 4559
+[17:46:01.330266] Epoch: [22]  [ 60/125]  eta: 0:00:18  lr: 0.000084  loss: 0.0042 (0.0042)  time: 0.2849  data: 0.1887  max mem: 4559
+[17:46:05.853611] Epoch: [22]  [ 80/125]  eta: 0:00:12  lr: 0.000084  loss: 0.0037 (0.0042)  time: 0.2261  data: 0.1276  max mem: 4559
+[17:46:11.082923] Epoch: [22]  [100/125]  eta: 0:00:06  lr: 0.000083  loss: 0.0041 (0.0041)  time: 0.2614  data: 0.1631  max mem: 4559
+[17:46:15.586721] Epoch: [22]  [120/125]  eta: 0:00:01  lr: 0.000082  loss: 0.0039 (0.0041)  time: 0.2251  data: 0.1263  max mem: 4559
+[17:46:15.958647] Epoch: [22]  [124/125]  eta: 0:00:00  lr: 0.000082  loss: 0.0039 (0.0041)  time: 0.2240  data: 0.1263  max mem: 4559
+[17:46:16.083496] Epoch: [22] Total time: 0:00:32 (0.2566 s / it)
+[17:46:16.083613] Averaged stats: lr: 0.000082  loss: 0.0039 (0.0041)
+[17:46:16.089018] log_dir: ./output_dir_mae_finetune
+[17:46:19.186486] Epoch: [23]  [  0/125]  eta: 0:06:26  lr: 0.000082  loss: 0.0047 (0.0047)  time: 3.0959  data: 3.0041  max mem: 4559
+[17:46:23.809710] Epoch: [23]  [ 20/125]  eta: 0:00:38  lr: 0.000081  loss: 0.0042 (0.0044)  time: 0.2311  data: 0.1349  max mem: 4559
+[17:46:28.251028] Epoch: [23]  [ 40/125]  eta: 0:00:25  lr: 0.000081  loss: 0.0042 (0.0043)  time: 0.2220  data: 0.1259  max mem: 4559
+[17:46:32.571797] Epoch: [23]  [ 60/125]  eta: 0:00:17  lr: 0.000080  loss: 0.0037 (0.0042)  time: 0.2160  data: 0.1186  max mem: 4559
+[17:46:37.240784] Epoch: [23]  [ 80/125]  eta: 0:00:11  lr: 0.000080  loss: 0.0038 (0.0042)  time: 0.2334  data: 0.1351  max mem: 4559
+[17:46:41.917686] Epoch: [23]  [100/125]  eta: 0:00:06  lr: 0.000079  loss: 0.0039 (0.0042)  time: 0.2338  data: 0.1363  max mem: 4559
+[17:46:46.193180] Epoch: [23]  [120/125]  eta: 0:00:01  lr: 0.000078  loss: 0.0037 (0.0041)  time: 0.2137  data: 0.1163  max mem: 4559
+[17:46:46.993654] Epoch: [23]  [124/125]  eta: 0:00:00  lr: 0.000078  loss: 0.0037 (0.0041)  time: 0.2343  data: 0.1369  max mem: 4559
+[17:46:47.110010] Epoch: [23] Total time: 0:00:31 (0.2482 s / it)
+[17:46:47.110163] Averaged stats: lr: 0.000078  loss: 0.0037 (0.0041)
+[17:46:47.117125] log_dir: ./output_dir_mae_finetune
+[17:46:49.925603] Epoch: [24]  [  0/125]  eta: 0:05:50  lr: 0.000078  loss: 0.0045 (0.0045)  time: 2.8066  data: 2.7061  max mem: 4559
+[17:46:53.969368] Epoch: [24]  [ 20/125]  eta: 0:00:34  lr: 0.000077  loss: 0.0043 (0.0043)  time: 0.2021  data: 0.0989  max mem: 4559
+[17:46:58.319635] Epoch: [24]  [ 40/125]  eta: 0:00:23  lr: 0.000077  loss: 0.0043 (0.0043)  time: 0.2175  data: 0.1192  max mem: 4559
+[17:47:03.381100] Epoch: [24]  [ 60/125]  eta: 0:00:17  lr: 0.000076  loss: 0.0041 (0.0043)  time: 0.2530  data: 0.1558  max mem: 4559
+[17:47:07.651299] Epoch: [24]  [ 80/125]  eta: 0:00:11  lr: 0.000075  loss: 0.0038 (0.0043)  time: 0.2135  data: 0.1157  max mem: 4559
+[17:47:12.448197] Epoch: [24]  [100/125]  eta: 0:00:06  lr: 0.000075  loss: 0.0038 (0.0042)  time: 0.2398  data: 0.1412  max mem: 4559
+[17:47:16.895500] Epoch: [24]  [120/125]  eta: 0:00:01  lr: 0.000074  loss: 0.0039 (0.0042)  time: 0.2223  data: 0.1247  max mem: 4559
+[17:47:17.277590] Epoch: [24]  [124/125]  eta: 0:00:00  lr: 0.000074  loss: 0.0039 (0.0042)  time: 0.2218  data: 0.1247  max mem: 4559
+[17:47:17.404422] Epoch: [24] Total time: 0:00:30 (0.2423 s / it)
+[17:47:17.404559] Averaged stats: lr: 0.000074  loss: 0.0039 (0.0042)
+[17:47:17.408344] log_dir: ./output_dir_mae_finetune
+[17:47:20.478940] Epoch: [25]  [  0/125]  eta: 0:06:23  lr: 0.000074  loss: 0.0048 (0.0048)  time: 3.0699  data: 2.9759  max mem: 4559
+[17:47:24.740343] Epoch: [25]  [ 20/125]  eta: 0:00:36  lr: 0.000073  loss: 0.0039 (0.0040)  time: 0.2130  data: 0.1148  max mem: 4559
+[17:47:29.246782] Epoch: [25]  [ 40/125]  eta: 0:00:24  lr: 0.000072  loss: 0.0044 (0.0041)  time: 0.2253  data: 0.1255  max mem: 4559
+[17:47:33.659612] Epoch: [25]  [ 60/125]  eta: 0:00:17  lr: 0.000072  loss: 0.0040 (0.0041)  time: 0.2206  data: 0.1218  max mem: 4559
+[17:47:37.977262] Epoch: [25]  [ 80/125]  eta: 0:00:11  lr: 0.000071  loss: 0.0036 (0.0041)  time: 0.2158  data: 0.1168  max mem: 4559
+[17:47:42.872113] Epoch: [25]  [100/125]  eta: 0:00:06  lr: 0.000070  loss: 0.0040 (0.0041)  time: 0.2447  data: 0.1462  max mem: 4559
+[17:47:47.471658] Epoch: [25]  [120/125]  eta: 0:00:01  lr: 0.000070  loss: 0.0040 (0.0041)  time: 0.2299  data: 0.1333  max mem: 4559
+[17:47:47.856470] Epoch: [25]  [124/125]  eta: 0:00:00  lr: 0.000070  loss: 0.0037 (0.0041)  time: 0.2301  data: 0.1333  max mem: 4559
+[17:47:47.973960] Epoch: [25] Total time: 0:00:30 (0.2445 s / it)
+[17:47:47.974113] Averaged stats: lr: 0.000070  loss: 0.0037 (0.0041)
+[17:47:47.981178] log_dir: ./output_dir_mae_finetune
+[17:47:51.020044] Epoch: [26]  [  0/125]  eta: 0:06:19  lr: 0.000069  loss: 0.0037 (0.0037)  time: 3.0381  data: 2.9482  max mem: 4559
+[17:47:55.764819] Epoch: [26]  [ 20/125]  eta: 0:00:38  lr: 0.000069  loss: 0.0037 (0.0039)  time: 0.2372  data: 0.1406  max mem: 4559
+[17:48:00.367067] Epoch: [26]  [ 40/125]  eta: 0:00:25  lr: 0.000068  loss: 0.0044 (0.0042)  time: 0.2300  data: 0.1325  max mem: 4559
+[17:48:04.333061] Epoch: [26]  [ 60/125]  eta: 0:00:17  lr: 0.000067  loss: 0.0041 (0.0041)  time: 0.1983  data: 0.0995  max mem: 4559
+[17:48:09.047534] Epoch: [26]  [ 80/125]  eta: 0:00:11  lr: 0.000067  loss: 0.0038 (0.0041)  time: 0.2356  data: 0.1357  max mem: 4559
+[17:48:13.764760] Epoch: [26]  [100/125]  eta: 0:00:06  lr: 0.000066  loss: 0.0037 (0.0041)  time: 0.2358  data: 0.1393  max mem: 4559
+[17:48:18.338149] Epoch: [26]  [120/125]  eta: 0:00:01  lr: 0.000065  loss: 0.0036 (0.0040)  time: 0.2286  data: 0.1330  max mem: 4559
+[17:48:18.720296] Epoch: [26]  [124/125]  eta: 0:00:00  lr: 0.000065  loss: 0.0037 (0.0040)  time: 0.2283  data: 0.1330  max mem: 4559
+[17:48:18.815835] Epoch: [26] Total time: 0:00:30 (0.2467 s / it)
+[17:48:18.815933] Averaged stats: lr: 0.000065  loss: 0.0037 (0.0040)
+[17:48:18.820362] log_dir: ./output_dir_mae_finetune
+[17:48:21.674983] Epoch: [27]  [  0/125]  eta: 0:05:56  lr: 0.000065  loss: 0.0051 (0.0051)  time: 2.8538  data: 2.7669  max mem: 4559
+[17:48:25.742258] Epoch: [27]  [ 20/125]  eta: 0:00:34  lr: 0.000064  loss: 0.0038 (0.0041)  time: 0.2033  data: 0.1058  max mem: 4559
+[17:48:30.266382] Epoch: [27]  [ 40/125]  eta: 0:00:23  lr: 0.000064  loss: 0.0044 (0.0042)  time: 0.2262  data: 0.1282  max mem: 4559
+[17:48:34.985538] Epoch: [27]  [ 60/125]  eta: 0:00:17  lr: 0.000063  loss: 0.0038 (0.0041)  time: 0.2359  data: 0.1382  max mem: 4559
+[17:48:39.204727] Epoch: [27]  [ 80/125]  eta: 0:00:11  lr: 0.000062  loss: 0.0035 (0.0041)  time: 0.2109  data: 0.1121  max mem: 4559
+[17:48:43.834534] Epoch: [27]  [100/125]  eta: 0:00:06  lr: 0.000062  loss: 0.0037 (0.0041)  time: 0.2314  data: 0.1300  max mem: 4559
+[17:48:48.606433] Epoch: [27]  [120/125]  eta: 0:00:01  lr: 0.000061  loss: 0.0037 (0.0040)  time: 0.2385  data: 0.1402  max mem: 4559
+[17:48:49.110539] Epoch: [27]  [124/125]  eta: 0:00:00  lr: 0.000061  loss: 0.0036 (0.0040)  time: 0.2388  data: 0.1408  max mem: 4559
+[17:48:49.225946] Epoch: [27] Total time: 0:00:30 (0.2432 s / it)
+[17:48:49.226081] Averaged stats: lr: 0.000061  loss: 0.0036 (0.0040)
+[17:48:49.229886] log_dir: ./output_dir_mae_finetune
+[17:48:52.145923] Epoch: [28]  [  0/125]  eta: 0:06:04  lr: 0.000061  loss: 0.0035 (0.0035)  time: 2.9152  data: 2.8216  max mem: 4559
+[17:48:56.969965] Epoch: [28]  [ 20/125]  eta: 0:00:38  lr: 0.000060  loss: 0.0036 (0.0037)  time: 0.2412  data: 0.1439  max mem: 4559
+[17:49:01.940837] Epoch: [28]  [ 40/125]  eta: 0:00:26  lr: 0.000059  loss: 0.0038 (0.0039)  time: 0.2485  data: 0.1517  max mem: 4559
+[17:49:06.025400] Epoch: [28]  [ 60/125]  eta: 0:00:17  lr: 0.000059  loss: 0.0035 (0.0039)  time: 0.2042  data: 0.1087  max mem: 4559
+[17:49:10.710182] Epoch: [28]  [ 80/125]  eta: 0:00:11  lr: 0.000058  loss: 0.0037 (0.0039)  time: 0.2342  data: 0.1386  max mem: 4559
+[17:49:15.885078] Epoch: [28]  [100/125]  eta: 0:00:06  lr: 0.000057  loss: 0.0035 (0.0038)  time: 0.2586  data: 0.1615  max mem: 4559
+[17:49:20.525699] Epoch: [28]  [120/125]  eta: 0:00:01  lr: 0.000057  loss: 0.0034 (0.0038)  time: 0.2320  data: 0.1342  max mem: 4559
+[17:49:20.913340] Epoch: [28]  [124/125]  eta: 0:00:00  lr: 0.000057  loss: 0.0034 (0.0038)  time: 0.2318  data: 0.1342  max mem: 4559
+[17:49:21.142269] Epoch: [28] Total time: 0:00:31 (0.2553 s / it)
+[17:49:21.142403] Averaged stats: lr: 0.000057  loss: 0.0034 (0.0038)
+[17:49:21.147513] log_dir: ./output_dir_mae_finetune
+[17:49:24.258027] Epoch: [29]  [  0/125]  eta: 0:06:28  lr: 0.000057  loss: 0.0041 (0.0041)  time: 3.1090  data: 3.0162  max mem: 4559
+[17:49:28.789009] Epoch: [29]  [ 20/125]  eta: 0:00:38  lr: 0.000056  loss: 0.0035 (0.0037)  time: 0.2265  data: 0.1283  max mem: 4559
+[17:49:33.409537] Epoch: [29]  [ 40/125]  eta: 0:00:25  lr: 0.000055  loss: 0.0038 (0.0038)  time: 0.2310  data: 0.1311  max mem: 4559
+[17:49:38.071653] Epoch: [29]  [ 60/125]  eta: 0:00:18  lr: 0.000054  loss: 0.0041 (0.0039)  time: 0.2331  data: 0.1350  max mem: 4559
+[17:49:42.266448] Epoch: [29]  [ 80/125]  eta: 0:00:11  lr: 0.000054  loss: 0.0037 (0.0039)  time: 0.2096  data: 0.1105  max mem: 4559
+[17:49:47.047982] Epoch: [29]  [100/125]  eta: 0:00:06  lr: 0.000053  loss: 0.0035 (0.0039)  time: 0.2390  data: 0.1401  max mem: 4559
+[17:49:51.580888] Epoch: [29]  [120/125]  eta: 0:00:01  lr: 0.000052  loss: 0.0035 (0.0039)  time: 0.2266  data: 0.1288  max mem: 4559
+[17:49:52.392769] Epoch: [29]  [124/125]  eta: 0:00:00  lr: 0.000052  loss: 0.0035 (0.0038)  time: 0.2407  data: 0.1433  max mem: 4559
+[17:49:52.501169] Epoch: [29] Total time: 0:00:31 (0.2508 s / it)
+[17:49:52.501307] Averaged stats: lr: 0.000052  loss: 0.0035 (0.0038)
+[17:49:52.505369] log_dir: ./output_dir_mae_finetune
+[17:49:55.362626] Epoch: [30]  [  0/125]  eta: 0:05:57  lr: 0.000052  loss: 0.0025 (0.0025)  time: 2.8562  data: 2.7682  max mem: 4559
+[17:49:59.942607] Epoch: [30]  [ 20/125]  eta: 0:00:37  lr: 0.000052  loss: 0.0038 (0.0039)  time: 0.2289  data: 0.1283  max mem: 4559
+[17:50:04.502832] Epoch: [30]  [ 40/125]  eta: 0:00:24  lr: 0.000051  loss: 0.0039 (0.0040)  time: 0.2279  data: 0.1298  max mem: 4559
+[17:50:08.892179] Epoch: [30]  [ 60/125]  eta: 0:00:17  lr: 0.000050  loss: 0.0037 (0.0040)  time: 0.2194  data: 0.1186  max mem: 4559
+[17:50:13.691855] Epoch: [30]  [ 80/125]  eta: 0:00:11  lr: 0.000050  loss: 0.0037 (0.0040)  time: 0.2399  data: 0.1387  max mem: 4559
+[17:50:19.553931] Epoch: [30]  [100/125]  eta: 0:00:06  lr: 0.000049  loss: 0.0036 (0.0039)  time: 0.2931  data: 0.1971  max mem: 4559
+[17:50:23.640261] Epoch: [30]  [120/125]  eta: 0:00:01  lr: 0.000048  loss: 0.0036 (0.0039)  time: 0.2043  data: 0.1094  max mem: 4559
+[17:50:24.021289] Epoch: [30]  [124/125]  eta: 0:00:00  lr: 0.000048  loss: 0.0036 (0.0039)  time: 0.2039  data: 0.1093  max mem: 4559
+[17:50:24.122999] Epoch: [30] Total time: 0:00:31 (0.2529 s / it)
+[17:50:24.123113] Averaged stats: lr: 0.000048  loss: 0.0036 (0.0039)
+[17:50:24.128125] log_dir: ./output_dir_mae_finetune
+[17:50:27.217714] Epoch: [31]  [  0/125]  eta: 0:06:26  lr: 0.000048  loss: 0.0034 (0.0034)  time: 3.0888  data: 2.9866  max mem: 4559
+[17:50:31.376017] Epoch: [31]  [ 20/125]  eta: 0:00:36  lr: 0.000047  loss: 0.0039 (0.0039)  time: 0.2079  data: 0.1097  max mem: 4559
+[17:50:35.995874] Epoch: [31]  [ 40/125]  eta: 0:00:24  lr: 0.000047  loss: 0.0040 (0.0040)  time: 0.2309  data: 0.1315  max mem: 4559
+[17:50:40.365877] Epoch: [31]  [ 60/125]  eta: 0:00:17  lr: 0.000046  loss: 0.0035 (0.0040)  time: 0.2184  data: 0.1203  max mem: 4559
+[17:50:44.725591] Epoch: [31]  [ 80/125]  eta: 0:00:11  lr: 0.000045  loss: 0.0038 (0.0039)  time: 0.2179  data: 0.1188  max mem: 4559
+[17:50:49.795662] Epoch: [31]  [100/125]  eta: 0:00:06  lr: 0.000045  loss: 0.0036 (0.0039)  time: 0.2534  data: 0.1540  max mem: 4559
+[17:50:54.359908] Epoch: [31]  [120/125]  eta: 0:00:01  lr: 0.000044  loss: 0.0036 (0.0039)  time: 0.2282  data: 0.1308  max mem: 4559
+[17:50:54.982866] Epoch: [31]  [124/125]  eta: 0:00:00  lr: 0.000044  loss: 0.0036 (0.0038)  time: 0.2402  data: 0.1420  max mem: 4559
+[17:50:55.090223] Epoch: [31] Total time: 0:00:30 (0.2477 s / it)
+[17:50:55.090353] Averaged stats: lr: 0.000044  loss: 0.0036 (0.0038)
+[17:50:55.095054] log_dir: ./output_dir_mae_finetune
+[17:50:57.937128] Epoch: [32]  [  0/125]  eta: 0:05:55  lr: 0.000044  loss: 0.0034 (0.0034)  time: 2.8410  data: 2.7510  max mem: 4559
+[17:51:02.099939] Epoch: [32]  [ 20/125]  eta: 0:00:35  lr: 0.000043  loss: 0.0034 (0.0037)  time: 0.2081  data: 0.1101  max mem: 4559
+[17:51:06.482865] Epoch: [32]  [ 40/125]  eta: 0:00:23  lr: 0.000043  loss: 0.0037 (0.0038)  time: 0.2191  data: 0.1221  max mem: 4559
+[17:51:10.756009] Epoch: [32]  [ 60/125]  eta: 0:00:16  lr: 0.000042  loss: 0.0034 (0.0038)  time: 0.2136  data: 0.1121  max mem: 4559
+[17:51:15.462704] Epoch: [32]  [ 80/125]  eta: 0:00:11  lr: 0.000041  loss: 0.0037 (0.0038)  time: 0.2353  data: 0.1389  max mem: 4559
+[17:51:20.051485] Epoch: [32]  [100/125]  eta: 0:00:06  lr: 0.000041  loss: 0.0033 (0.0038)  time: 0.2294  data: 0.1315  max mem: 4559
+[17:51:24.576009] Epoch: [32]  [120/125]  eta: 0:00:01  lr: 0.000040  loss: 0.0031 (0.0037)  time: 0.2262  data: 0.1293  max mem: 4559
+[17:51:25.727801] Epoch: [32]  [124/125]  eta: 0:00:00  lr: 0.000040  loss: 0.0031 (0.0037)  time: 0.2424  data: 0.1455  max mem: 4559
+[17:51:25.833267] Epoch: [32] Total time: 0:00:30 (0.2459 s / it)
+[17:51:25.833401] Averaged stats: lr: 0.000040  loss: 0.0031 (0.0037)
+[17:51:25.839912] log_dir: ./output_dir_mae_finetune
+[17:51:28.793902] Epoch: [33]  [  0/125]  eta: 0:06:09  lr: 0.000040  loss: 0.0036 (0.0036)  time: 2.9532  data: 2.8646  max mem: 4559
+[17:51:33.389506] Epoch: [33]  [ 20/125]  eta: 0:00:37  lr: 0.000039  loss: 0.0034 (0.0036)  time: 0.2297  data: 0.1330  max mem: 4559
+[17:51:38.150387] Epoch: [33]  [ 40/125]  eta: 0:00:25  lr: 0.000038  loss: 0.0035 (0.0037)  time: 0.2379  data: 0.1400  max mem: 4559
+[17:51:43.182257] Epoch: [33]  [ 60/125]  eta: 0:00:18  lr: 0.000038  loss: 0.0037 (0.0038)  time: 0.2515  data: 0.1544  max mem: 4559
+[17:51:47.770574] Epoch: [33]  [ 80/125]  eta: 0:00:12  lr: 0.000037  loss: 0.0033 (0.0038)  time: 0.2293  data: 0.1257  max mem: 4559
+[17:51:52.475512] Epoch: [33]  [100/125]  eta: 0:00:06  lr: 0.000037  loss: 0.0036 (0.0037)  time: 0.2352  data: 0.1379  max mem: 4559
+[17:51:57.252562] Epoch: [33]  [120/125]  eta: 0:00:01  lr: 0.000036  loss: 0.0034 (0.0037)  time: 0.2388  data: 0.1427  max mem: 4559
+[17:51:58.054783] Epoch: [33]  [124/125]  eta: 0:00:00  lr: 0.000036  loss: 0.0033 (0.0037)  time: 0.2323  data: 0.1360  max mem: 4559
+[17:51:58.165858] Epoch: [33] Total time: 0:00:32 (0.2586 s / it)
+[17:51:58.165998] Averaged stats: lr: 0.000036  loss: 0.0033 (0.0037)
+[17:51:58.171043] log_dir: ./output_dir_mae_finetune
+[17:52:01.247299] Epoch: [34]  [  0/125]  eta: 0:06:24  lr: 0.000036  loss: 0.0033 (0.0033)  time: 3.0755  data: 2.9861  max mem: 4559
+[17:52:05.660857] Epoch: [34]  [ 20/125]  eta: 0:00:37  lr: 0.000035  loss: 0.0035 (0.0038)  time: 0.2206  data: 0.1227  max mem: 4559
+[17:52:10.008189] Epoch: [34]  [ 40/125]  eta: 0:00:24  lr: 0.000035  loss: 0.0036 (0.0039)  time: 0.2173  data: 0.1195  max mem: 4559
+[17:52:14.208211] Epoch: [34]  [ 60/125]  eta: 0:00:17  lr: 0.000034  loss: 0.0033 (0.0037)  time: 0.2099  data: 0.1148  max mem: 4559
+[17:52:18.856566] Epoch: [34]  [ 80/125]  eta: 0:00:11  lr: 0.000033  loss: 0.0034 (0.0037)  time: 0.2324  data: 0.1351  max mem: 4559
+[17:52:23.456019] Epoch: [34]  [100/125]  eta: 0:00:06  lr: 0.000033  loss: 0.0033 (0.0036)  time: 0.2298  data: 0.1282  max mem: 4559
+[17:52:28.021887] Epoch: [34]  [120/125]  eta: 0:00:01  lr: 0.000032  loss: 0.0034 (0.0036)  time: 0.2282  data: 0.1290  max mem: 4559
+[17:52:29.336880] Epoch: [34]  [124/125]  eta: 0:00:00  lr: 0.000032  loss: 0.0035 (0.0036)  time: 0.2192  data: 0.1203  max mem: 4559
+[17:52:29.450312] Epoch: [34] Total time: 0:00:31 (0.2502 s / it)
+[17:52:29.450445] Averaged stats: lr: 0.000032  loss: 0.0035 (0.0036)
+[17:52:29.456653] log_dir: ./output_dir_mae_finetune
+[17:52:32.523008] Epoch: [35]  [  0/125]  eta: 0:06:23  lr: 0.000032  loss: 0.0028 (0.0028)  time: 3.0656  data: 2.9717  max mem: 4559
+[17:52:37.404641] Epoch: [35]  [ 20/125]  eta: 0:00:39  lr: 0.000031  loss: 0.0036 (0.0036)  time: 0.2440  data: 0.1494  max mem: 4559
+[17:52:41.886697] Epoch: [35]  [ 40/125]  eta: 0:00:25  lr: 0.000031  loss: 0.0035 (0.0037)  time: 0.2240  data: 0.1279  max mem: 4559
+[17:52:46.510176] Epoch: [35]  [ 60/125]  eta: 0:00:18  lr: 0.000030  loss: 0.0035 (0.0037)  time: 0.2311  data: 0.1327  max mem: 4559
+[17:52:51.600025] Epoch: [35]  [ 80/125]  eta: 0:00:12  lr: 0.000030  loss: 0.0035 (0.0037)  time: 0.2544  data: 0.1527  max mem: 4559
+[17:52:57.034664] Epoch: [35]  [100/125]  eta: 0:00:06  lr: 0.000029  loss: 0.0038 (0.0037)  time: 0.2717  data: 0.1738  max mem: 4559
+[17:53:01.759334] Epoch: [35]  [120/125]  eta: 0:00:01  lr: 0.000028  loss: 0.0035 (0.0037)  time: 0.2362  data: 0.1343  max mem: 4559
+[17:53:02.195838] Epoch: [35]  [124/125]  eta: 0:00:00  lr: 0.000028  loss: 0.0037 (0.0037)  time: 0.2388  data: 0.1342  max mem: 4559
+[17:53:02.323731] Epoch: [35] Total time: 0:00:32 (0.2629 s / it)
+[17:53:02.323902] Averaged stats: lr: 0.000028  loss: 0.0037 (0.0037)
+[17:53:02.331314] log_dir: ./output_dir_mae_finetune
+[17:53:05.491038] Epoch: [36]  [  0/125]  eta: 0:06:34  lr: 0.000028  loss: 0.0030 (0.0030)  time: 3.1588  data: 3.0607  max mem: 4559
+[17:53:09.739236] Epoch: [36]  [ 20/125]  eta: 0:00:37  lr: 0.000028  loss: 0.0036 (0.0036)  time: 0.2123  data: 0.1018  max mem: 4559
+[17:53:14.321428] Epoch: [36]  [ 40/125]  eta: 0:00:24  lr: 0.000027  loss: 0.0034 (0.0036)  time: 0.2290  data: 0.1181  max mem: 4559
+[17:53:19.555228] Epoch: [36]  [ 60/125]  eta: 0:00:18  lr: 0.000027  loss: 0.0035 (0.0037)  time: 0.2616  data: 0.1509  max mem: 4559
+[17:53:24.045938] Epoch: [36]  [ 80/125]  eta: 0:00:12  lr: 0.000026  loss: 0.0035 (0.0037)  time: 0.2245  data: 0.1153  max mem: 4559
+[17:53:28.712993] Epoch: [36]  [100/125]  eta: 0:00:06  lr: 0.000026  loss: 0.0034 (0.0036)  time: 0.2333  data: 0.1231  max mem: 4559
+[17:53:33.238900] Epoch: [36]  [120/125]  eta: 0:00:01  lr: 0.000025  loss: 0.0031 (0.0036)  time: 0.2262  data: 0.1206  max mem: 4559
+[17:53:33.647210] Epoch: [36]  [124/125]  eta: 0:00:00  lr: 0.000025  loss: 0.0032 (0.0036)  time: 0.2252  data: 0.1205  max mem: 4559
+[17:53:33.741971] Epoch: [36] Total time: 0:00:31 (0.2513 s / it)
+[17:53:33.742094] Averaged stats: lr: 0.000025  loss: 0.0032 (0.0036)
+[17:53:33.747768] log_dir: ./output_dir_mae_finetune
+[17:53:36.960208] Epoch: [37]  [  0/125]  eta: 0:06:41  lr: 0.000025  loss: 0.0045 (0.0045)  time: 3.2118  data: 3.1057  max mem: 4559
+[17:53:41.859745] Epoch: [37]  [ 20/125]  eta: 0:00:40  lr: 0.000024  loss: 0.0032 (0.0035)  time: 0.2449  data: 0.1334  max mem: 4559
+[17:53:46.977400] Epoch: [37]  [ 40/125]  eta: 0:00:27  lr: 0.000024  loss: 0.0034 (0.0035)  time: 0.2558  data: 0.1459  max mem: 4559
+[17:53:51.188755] Epoch: [37]  [ 60/125]  eta: 0:00:18  lr: 0.000023  loss: 0.0034 (0.0035)  time: 0.2105  data: 0.0994  max mem: 4559
+[17:53:55.953029] Epoch: [37]  [ 80/125]  eta: 0:00:12  lr: 0.000023  loss: 0.0032 (0.0035)  time: 0.2382  data: 0.1286  max mem: 4559
+[17:54:00.754034] Epoch: [37]  [100/125]  eta: 0:00:06  lr: 0.000022  loss: 0.0033 (0.0035)  time: 0.2400  data: 0.1301  max mem: 4559
+[17:54:05.230073] Epoch: [37]  [120/125]  eta: 0:00:01  lr: 0.000022  loss: 0.0035 (0.0035)  time: 0.2238  data: 0.1165  max mem: 4559
+[17:54:05.646484] Epoch: [37]  [124/125]  eta: 0:00:00  lr: 0.000022  loss: 0.0036 (0.0035)  time: 0.2238  data: 0.1165  max mem: 4559
+[17:54:05.750483] Epoch: [37] Total time: 0:00:32 (0.2560 s / it)
+[17:54:05.750617] Averaged stats: lr: 0.000022  loss: 0.0036 (0.0035)
+[17:54:05.755341] log_dir: ./output_dir_mae_finetune
+[17:54:08.801127] Epoch: [38]  [  0/125]  eta: 0:06:20  lr: 0.000022  loss: 0.0032 (0.0032)  time: 3.0450  data: 2.9423  max mem: 4559
+[17:54:13.242055] Epoch: [38]  [ 20/125]  eta: 0:00:37  lr: 0.000021  loss: 0.0031 (0.0034)  time: 0.2220  data: 0.1049  max mem: 4559
+[17:54:17.913509] Epoch: [38]  [ 40/125]  eta: 0:00:25  lr: 0.000020  loss: 0.0036 (0.0035)  time: 0.2335  data: 0.1153  max mem: 4559
+[17:54:22.528108] Epoch: [38]  [ 60/125]  eta: 0:00:17  lr: 0.000020  loss: 0.0039 (0.0036)  time: 0.2307  data: 0.1198  max mem: 4559
+[17:54:27.754797] Epoch: [38]  [ 80/125]  eta: 0:00:12  lr: 0.000019  loss: 0.0031 (0.0036)  time: 0.2613  data: 0.1497  max mem: 4559
+[17:54:32.289104] Epoch: [38]  [100/125]  eta: 0:00:06  lr: 0.000019  loss: 0.0033 (0.0035)  time: 0.2266  data: 0.1118  max mem: 4559
+[17:54:36.649055] Epoch: [38]  [120/125]  eta: 0:00:01  lr: 0.000019  loss: 0.0032 (0.0035)  time: 0.2179  data: 0.1026  max mem: 4559
+[17:54:38.104784] Epoch: [38]  [124/125]  eta: 0:00:00  lr: 0.000018  loss: 0.0032 (0.0035)  time: 0.2200  data: 0.1061  max mem: 4559
+[17:54:38.212133] Epoch: [38] Total time: 0:00:32 (0.2597 s / it)
+[17:54:38.212241] Averaged stats: lr: 0.000018  loss: 0.0032 (0.0035)
+[17:54:38.216689] log_dir: ./output_dir_mae_finetune
+[17:54:41.461347] Epoch: [39]  [  0/125]  eta: 0:06:45  lr: 0.000018  loss: 0.0031 (0.0031)  time: 3.2438  data: 3.1459  max mem: 4559
+[17:54:46.235963] Epoch: [39]  [ 20/125]  eta: 0:00:40  lr: 0.000018  loss: 0.0034 (0.0035)  time: 0.2387  data: 0.1262  max mem: 4559
+[17:54:50.701285] Epoch: [39]  [ 40/125]  eta: 0:00:25  lr: 0.000017  loss: 0.0036 (0.0036)  time: 0.2232  data: 0.1113  max mem: 4559
+[17:54:56.010505] Epoch: [39]  [ 60/125]  eta: 0:00:18  lr: 0.000017  loss: 0.0034 (0.0036)  time: 0.2653  data: 0.1548  max mem: 4559
+[17:55:00.753972] Epoch: [39]  [ 80/125]  eta: 0:00:12  lr: 0.000017  loss: 0.0035 (0.0036)  time: 0.2371  data: 0.1290  max mem: 4559
+[17:55:05.881394] Epoch: [39]  [100/125]  eta: 0:00:06  lr: 0.000016  loss: 0.0034 (0.0036)  time: 0.2563  data: 0.1471  max mem: 4559
+[17:55:10.620258] Epoch: [39]  [120/125]  eta: 0:00:01  lr: 0.000016  loss: 0.0031 (0.0035)  time: 0.2369  data: 0.1271  max mem: 4559
+[17:55:11.051571] Epoch: [39]  [124/125]  eta: 0:00:00  lr: 0.000016  loss: 0.0031 (0.0035)  time: 0.2365  data: 0.1270  max mem: 4559
+[17:55:11.173094] Epoch: [39] Total time: 0:00:32 (0.2637 s / it)
+[17:55:11.173229] Averaged stats: lr: 0.000016  loss: 0.0031 (0.0035)
+[17:55:11.178611] log_dir: ./output_dir_mae_finetune
+[17:55:14.305416] Epoch: [40]  [  0/125]  eta: 0:06:30  lr: 0.000016  loss: 0.0033 (0.0033)  time: 3.1257  data: 3.0288  max mem: 4559
+[17:55:19.039379] Epoch: [40]  [ 20/125]  eta: 0:00:39  lr: 0.000015  loss: 0.0034 (0.0037)  time: 0.2366  data: 0.1216  max mem: 4559
+[17:55:23.652767] Epoch: [40]  [ 40/125]  eta: 0:00:25  lr: 0.000015  loss: 0.0032 (0.0036)  time: 0.2306  data: 0.1161  max mem: 4559
+[17:55:28.437390] Epoch: [40]  [ 60/125]  eta: 0:00:18  lr: 0.000014  loss: 0.0035 (0.0036)  time: 0.2390  data: 0.1250  max mem: 4559
+[17:55:33.303191] Epoch: [40]  [ 80/125]  eta: 0:00:12  lr: 0.000014  loss: 0.0033 (0.0036)  time: 0.2432  data: 0.1286  max mem: 4559
+[17:55:38.455182] Epoch: [40]  [100/125]  eta: 0:00:06  lr: 0.000013  loss: 0.0035 (0.0036)  time: 0.2575  data: 0.1440  max mem: 4559
+[17:55:43.616704] Epoch: [40]  [120/125]  eta: 0:00:01  lr: 0.000013  loss: 0.0031 (0.0035)  time: 0.2580  data: 0.1502  max mem: 4559
+[17:55:44.428403] Epoch: [40]  [124/125]  eta: 0:00:00  lr: 0.000013  loss: 0.0031 (0.0035)  time: 0.2515  data: 0.1440  max mem: 4559
+[17:55:44.540848] Epoch: [40] Total time: 0:00:33 (0.2669 s / it)
+[17:55:44.541032] Averaged stats: lr: 0.000013  loss: 0.0031 (0.0035)
+[17:55:45.834433] log_dir: ./output_dir_mae_finetune
+[17:55:49.096817] Epoch: [41]  [  0/125]  eta: 0:06:47  lr: 0.000013  loss: 0.0034 (0.0034)  time: 3.2610  data: 3.1523  max mem: 4559
+[17:55:53.904525] Epoch: [41]  [ 20/125]  eta: 0:00:40  lr: 0.000012  loss: 0.0032 (0.0034)  time: 0.2403  data: 0.1269  max mem: 4559
+[17:55:58.806331] Epoch: [41]  [ 40/125]  eta: 0:00:26  lr: 0.000012  loss: 0.0035 (0.0036)  time: 0.2450  data: 0.1351  max mem: 4559
+[17:56:02.851367] Epoch: [41]  [ 60/125]  eta: 0:00:18  lr: 0.000012  loss: 0.0034 (0.0036)  time: 0.2022  data: 0.0924  max mem: 4559
+[17:56:07.752050] Epoch: [41]  [ 80/125]  eta: 0:00:12  lr: 0.000011  loss: 0.0034 (0.0036)  time: 0.2450  data: 0.1302  max mem: 4559
+[17:56:13.284474] Epoch: [41]  [100/125]  eta: 0:00:06  lr: 0.000011  loss: 0.0031 (0.0036)  time: 0.2766  data: 0.1636  max mem: 4559
+[17:56:18.528698] Epoch: [41]  [120/125]  eta: 0:00:01  lr: 0.000011  loss: 0.0031 (0.0035)  time: 0.2622  data: 0.1528  max mem: 4559
+[17:56:18.971512] Epoch: [41]  [124/125]  eta: 0:00:00  lr: 0.000010  loss: 0.0031 (0.0035)  time: 0.2618  data: 0.1528  max mem: 4559
+[17:56:19.080067] Epoch: [41] Total time: 0:00:33 (0.2660 s / it)
+[17:56:19.080214] Averaged stats: lr: 0.000010  loss: 0.0031 (0.0035)
+[17:56:19.087214] log_dir: ./output_dir_mae_finetune
+[17:56:22.143007] Epoch: [42]  [  0/125]  eta: 0:06:21  lr: 0.000010  loss: 0.0034 (0.0034)  time: 3.0550  data: 2.9519  max mem: 4559
+[17:56:26.315222] Epoch: [42]  [ 20/125]  eta: 0:00:36  lr: 0.000010  loss: 0.0037 (0.0035)  time: 0.2085  data: 0.0963  max mem: 4559
+[17:56:30.861078] Epoch: [42]  [ 40/125]  eta: 0:00:24  lr: 0.000010  loss: 0.0033 (0.0035)  time: 0.2272  data: 0.1174  max mem: 4559
+[17:56:36.583760] Epoch: [42]  [ 60/125]  eta: 0:00:18  lr: 0.000009  loss: 0.0033 (0.0035)  time: 0.2861  data: 0.1732  max mem: 4559
+[17:56:41.104962] Epoch: [42]  [ 80/125]  eta: 0:00:12  lr: 0.000009  loss: 0.0032 (0.0035)  time: 0.2260  data: 0.1149  max mem: 4559
+[17:56:46.340732] Epoch: [42]  [100/125]  eta: 0:00:06  lr: 0.000009  loss: 0.0031 (0.0034)  time: 0.2617  data: 0.1511  max mem: 4559
+[17:56:51.398604] Epoch: [42]  [120/125]  eta: 0:00:01  lr: 0.000008  loss: 0.0036 (0.0035)  time: 0.2528  data: 0.1414  max mem: 4559
+[17:56:51.850143] Epoch: [42]  [124/125]  eta: 0:00:00  lr: 0.000008  loss: 0.0035 (0.0035)  time: 0.2529  data: 0.1414  max mem: 4559
+[17:56:51.952362] Epoch: [42] Total time: 0:00:32 (0.2629 s / it)
+[17:56:51.952464] Averaged stats: lr: 0.000008  loss: 0.0035 (0.0035)
+[17:56:51.957344] log_dir: ./output_dir_mae_finetune
+[17:56:55.189362] Epoch: [43]  [  0/125]  eta: 0:06:43  lr: 0.000008  loss: 0.0041 (0.0041)  time: 3.2312  data: 3.1395  max mem: 4559
+[17:57:00.161313] Epoch: [43]  [ 20/125]  eta: 0:00:41  lr: 0.000008  loss: 0.0032 (0.0035)  time: 0.2485  data: 0.1381  max mem: 4559
+[17:57:05.354665] Epoch: [43]  [ 40/125]  eta: 0:00:27  lr: 0.000008  loss: 0.0038 (0.0036)  time: 0.2596  data: 0.1474  max mem: 4559
+[17:57:09.980686] Epoch: [43]  [ 60/125]  eta: 0:00:19  lr: 0.000007  loss: 0.0032 (0.0035)  time: 0.2312  data: 0.1210  max mem: 4559
+[17:57:15.559518] Epoch: [43]  [ 80/125]  eta: 0:00:13  lr: 0.000007  loss: 0.0032 (0.0035)  time: 0.2789  data: 0.1689  max mem: 4559
+[17:57:21.160058] Epoch: [43]  [100/125]  eta: 0:00:07  lr: 0.000007  loss: 0.0033 (0.0035)  time: 0.2800  data: 0.1694  max mem: 4559
+[17:57:26.401111] Epoch: [43]  [120/125]  eta: 0:00:01  lr: 0.000006  loss: 0.0032 (0.0035)  time: 0.2620  data: 0.1541  max mem: 4559
+[17:57:26.862593] Epoch: [43]  [124/125]  eta: 0:00:00  lr: 0.000006  loss: 0.0032 (0.0035)  time: 0.2625  data: 0.1541  max mem: 4559
+[17:57:26.968254] Epoch: [43] Total time: 0:00:35 (0.2801 s / it)
+[17:57:26.968397] Averaged stats: lr: 0.000006  loss: 0.0032 (0.0035)
+[17:57:26.974600] log_dir: ./output_dir_mae_finetune
+[17:57:30.088699] Epoch: [44]  [  0/125]  eta: 0:06:29  lr: 0.000006  loss: 0.0029 (0.0029)  time: 3.1120  data: 3.0175  max mem: 4559
+[17:57:35.024938] Epoch: [44]  [ 20/125]  eta: 0:00:40  lr: 0.000006  loss: 0.0033 (0.0035)  time: 0.2467  data: 0.1385  max mem: 4559
+[17:57:39.910274] Epoch: [44]  [ 40/125]  eta: 0:00:26  lr: 0.000006  loss: 0.0037 (0.0037)  time: 0.2442  data: 0.1342  max mem: 4559
+[17:57:44.761714] Epoch: [44]  [ 60/125]  eta: 0:00:18  lr: 0.000006  loss: 0.0033 (0.0036)  time: 0.2425  data: 0.1309  max mem: 4559
+[17:57:49.092240] Epoch: [44]  [ 80/125]  eta: 0:00:12  lr: 0.000005  loss: 0.0031 (0.0036)  time: 0.2165  data: 0.1038  max mem: 4559
+[17:57:53.889093] Epoch: [44]  [100/125]  eta: 0:00:06  lr: 0.000005  loss: 0.0029 (0.0035)  time: 0.2398  data: 0.1275  max mem: 4559
+[17:57:58.576000] Epoch: [44]  [120/125]  eta: 0:00:01  lr: 0.000005  loss: 0.0032 (0.0035)  time: 0.2343  data: 0.1233  max mem: 4559
+[17:58:00.048291] Epoch: [44]  [124/125]  eta: 0:00:00  lr: 0.000005  loss: 0.0032 (0.0035)  time: 0.2821  data: 0.1724  max mem: 4559
+[17:58:00.163345] Epoch: [44] Total time: 0:00:33 (0.2655 s / it)
+[17:58:00.163417] Averaged stats: lr: 0.000005  loss: 0.0032 (0.0035)
+[17:58:00.166199] log_dir: ./output_dir_mae_finetune
+[17:58:03.391890] Epoch: [45]  [  0/125]  eta: 0:06:43  lr: 0.000005  loss: 0.0027 (0.0027)  time: 3.2244  data: 3.1170  max mem: 4559
+[17:58:08.069221] Epoch: [45]  [ 20/125]  eta: 0:00:39  lr: 0.000005  loss: 0.0034 (0.0035)  time: 0.2338  data: 0.1215  max mem: 4559
+[17:58:12.884831] Epoch: [45]  [ 40/125]  eta: 0:00:26  lr: 0.000004  loss: 0.0033 (0.0035)  time: 0.2407  data: 0.1307  max mem: 4559
+[17:58:17.514140] Epoch: [45]  [ 60/125]  eta: 0:00:18  lr: 0.000004  loss: 0.0034 (0.0035)  time: 0.2314  data: 0.1196  max mem: 4559
+[17:58:22.258753] Epoch: [45]  [ 80/125]  eta: 0:00:12  lr: 0.000004  loss: 0.0031 (0.0035)  time: 0.2372  data: 0.1249  max mem: 4559
+[17:58:27.393365] Epoch: [45]  [100/125]  eta: 0:00:06  lr: 0.000004  loss: 0.0033 (0.0035)  time: 0.2567  data: 0.1465  max mem: 4559
+[17:58:32.151922] Epoch: [45]  [120/125]  eta: 0:00:01  lr: 0.000003  loss: 0.0034 (0.0034)  time: 0.2379  data: 0.1280  max mem: 4559
+[17:58:32.781268] Epoch: [45]  [124/125]  eta: 0:00:00  lr: 0.000003  loss: 0.0034 (0.0034)  time: 0.2459  data: 0.1375  max mem: 4559
+[17:58:32.902444] Epoch: [45] Total time: 0:00:32 (0.2619 s / it)
+[17:58:32.902585] Averaged stats: lr: 0.000003  loss: 0.0034 (0.0034)
+[17:58:32.909211] log_dir: ./output_dir_mae_finetune
+[17:58:36.214613] Epoch: [46]  [  0/125]  eta: 0:06:53  lr: 0.000003  loss: 0.0033 (0.0033)  time: 3.3045  data: 3.2007  max mem: 4559
+[17:58:41.526566] Epoch: [46]  [ 20/125]  eta: 0:00:43  lr: 0.000003  loss: 0.0033 (0.0035)  time: 0.2655  data: 0.1554  max mem: 4559
+[17:58:46.808242] Epoch: [46]  [ 40/125]  eta: 0:00:28  lr: 0.000003  loss: 0.0031 (0.0034)  time: 0.2640  data: 0.1509  max mem: 4559
+[17:58:51.092057] Epoch: [46]  [ 60/125]  eta: 0:00:19  lr: 0.000003  loss: 0.0033 (0.0034)  time: 0.2140  data: 0.1016  max mem: 4559
+[17:58:55.954487] Epoch: [46]  [ 80/125]  eta: 0:00:12  lr: 0.000003  loss: 0.0031 (0.0034)  time: 0.2431  data: 0.1275  max mem: 4559
+[17:59:01.013383] Epoch: [46]  [100/125]  eta: 0:00:06  lr: 0.000003  loss: 0.0033 (0.0034)  time: 0.2529  data: 0.1431  max mem: 4559
+[17:59:05.673017] Epoch: [46]  [120/125]  eta: 0:00:01  lr: 0.000002  loss: 0.0029 (0.0034)  time: 0.2329  data: 0.1233  max mem: 4559
+[17:59:06.101109] Epoch: [46]  [124/125]  eta: 0:00:00  lr: 0.000002  loss: 0.0030 (0.0034)  time: 0.2319  data: 0.1232  max mem: 4559
+[17:59:06.200414] Epoch: [46] Total time: 0:00:33 (0.2663 s / it)
+[17:59:06.200556] Averaged stats: lr: 0.000002  loss: 0.0030 (0.0034)
+[17:59:06.204429] log_dir: ./output_dir_mae_finetune
+[17:59:09.560348] Epoch: [47]  [  0/125]  eta: 0:06:59  lr: 0.000002  loss: 0.0037 (0.0037)  time: 3.3546  data: 3.2510  max mem: 4559
+[17:59:14.427601] Epoch: [47]  [ 20/125]  eta: 0:00:41  lr: 0.000002  loss: 0.0033 (0.0034)  time: 0.2433  data: 0.1356  max mem: 4559
+[17:59:19.074274] Epoch: [47]  [ 40/125]  eta: 0:00:26  lr: 0.000002  loss: 0.0036 (0.0036)  time: 0.2323  data: 0.1242  max mem: 4559
+[17:59:23.334970] Epoch: [47]  [ 60/125]  eta: 0:00:18  lr: 0.000002  loss: 0.0031 (0.0035)  time: 0.2130  data: 0.1046  max mem: 4559
+[17:59:28.375817] Epoch: [47]  [ 80/125]  eta: 0:00:12  lr: 0.000002  loss: 0.0032 (0.0034)  time: 0.2520  data: 0.1427  max mem: 4559
+[17:59:34.141072] Epoch: [47]  [100/125]  eta: 0:00:06  lr: 0.000002  loss: 0.0032 (0.0034)  time: 0.2882  data: 0.1730  max mem: 4559
+[17:59:39.046582] Epoch: [47]  [120/125]  eta: 0:00:01  lr: 0.000002  loss: 0.0032 (0.0033)  time: 0.2452  data: 0.1362  max mem: 4559
+[17:59:41.416357] Epoch: [47]  [124/125]  eta: 0:00:00  lr: 0.000002  loss: 0.0032 (0.0033)  time: 0.2818  data: 0.1724  max mem: 4559
+[17:59:41.521029] Epoch: [47] Total time: 0:00:35 (0.2825 s / it)
+[17:59:41.521172] Averaged stats: lr: 0.000002  loss: 0.0032 (0.0033)
+[17:59:41.526855] log_dir: ./output_dir_mae_finetune
+[17:59:44.908074] Epoch: [48]  [  0/125]  eta: 0:07:02  lr: 0.000002  loss: 0.0029 (0.0029)  time: 3.3796  data: 3.2803  max mem: 4559
+[17:59:49.645740] Epoch: [48]  [ 20/125]  eta: 0:00:40  lr: 0.000002  loss: 0.0029 (0.0032)  time: 0.2367  data: 0.1258  max mem: 4559
+[17:59:54.594153] Epoch: [48]  [ 40/125]  eta: 0:00:27  lr: 0.000001  loss: 0.0036 (0.0034)  time: 0.2473  data: 0.1379  max mem: 4559
+[17:59:59.222855] Epoch: [48]  [ 60/125]  eta: 0:00:18  lr: 0.000001  loss: 0.0035 (0.0035)  time: 0.2314  data: 0.1209  max mem: 4559
+[18:00:04.569838] Epoch: [48]  [ 80/125]  eta: 0:00:12  lr: 0.000001  loss: 0.0029 (0.0035)  time: 0.2673  data: 0.1554  max mem: 4559
+[18:00:09.760063] Epoch: [48]  [100/125]  eta: 0:00:06  lr: 0.000001  loss: 0.0030 (0.0035)  time: 0.2594  data: 0.1428  max mem: 4559
+[18:00:14.524391] Epoch: [48]  [120/125]  eta: 0:00:01  lr: 0.000001  loss: 0.0030 (0.0034)  time: 0.2382  data: 0.1269  max mem: 4559
+[18:00:15.898811] Epoch: [48]  [124/125]  eta: 0:00:00  lr: 0.000001  loss: 0.0031 (0.0034)  time: 0.2358  data: 0.1252  max mem: 4559
+[18:00:15.986545] Epoch: [48] Total time: 0:00:34 (0.2757 s / it)
+[18:00:15.986652] Averaged stats: lr: 0.000001  loss: 0.0031 (0.0034)
+[18:00:15.991495] log_dir: ./output_dir_mae_finetune
+[18:00:19.047354] Epoch: [49]  [  0/125]  eta: 0:06:21  lr: 0.000001  loss: 0.0031 (0.0031)  time: 3.0551  data: 2.9484  max mem: 4559
+[18:00:24.299663] Epoch: [49]  [ 20/125]  eta: 0:00:41  lr: 0.000001  loss: 0.0031 (0.0034)  time: 0.2626  data: 0.1525  max mem: 4559
+[18:00:29.430483] Epoch: [49]  [ 40/125]  eta: 0:00:27  lr: 0.000001  loss: 0.0034 (0.0034)  time: 0.2565  data: 0.1460  max mem: 4559
+[18:00:33.881937] Epoch: [49]  [ 60/125]  eta: 0:00:19  lr: 0.000001  loss: 0.0033 (0.0034)  time: 0.2225  data: 0.1098  max mem: 4559
+[18:00:39.026460] Epoch: [49]  [ 80/125]  eta: 0:00:12  lr: 0.000001  loss: 0.0031 (0.0034)  time: 0.2572  data: 0.1471  max mem: 4559
+[18:00:44.979045] Epoch: [49]  [100/125]  eta: 0:00:07  lr: 0.000001  loss: 0.0033 (0.0034)  time: 0.2975  data: 0.1856  max mem: 4559
+[18:00:49.636289] Epoch: [49]  [120/125]  eta: 0:00:01  lr: 0.000001  loss: 0.0034 (0.0034)  time: 0.2328  data: 0.1191  max mem: 4559
+[18:00:50.056802] Epoch: [49]  [124/125]  eta: 0:00:00  lr: 0.000001  loss: 0.0032 (0.0034)  time: 0.2314  data: 0.1190  max mem: 4559
+[18:00:50.151286] Epoch: [49] Total time: 0:00:34 (0.2733 s / it)
+[18:00:50.151399] Averaged stats: lr: 0.000001  loss: 0.0032 (0.0034)
+[18:00:52.766711] Training time 0:27:10
